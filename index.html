@@ -15,7 +15,7 @@
               media="all" href="css/style.css" />
         <script>
             $(function () {
-                $('.no-click').click(function(e) {
+                $('.no-click').on('click', function(e) {
                     e.preventDefault();
                 });
             });
@@ -35,11 +35,11 @@
                 <div class="app-column menus-container">
 
                     <div class="area-container">
-                        <h4 class="area-header">Forms</h4>
+                        <h4 class="area-header">Menus</h4>
                         <div class="area-content area-content-nav">
                             <ul class="nav nav-pills nav-stacked" data-bind="foreach: menus">
                                 <li>
-                                    <a href="#" class="nav-menu no-click">Forms</a>
+                                    <a href="#" class="nav-menu no-click">Menu</a>
                                     <ul class="nav nav-pills nav-stacked" data-bind="foreach: forms">
                                         <li data-bind="css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }">
                                             <a data-bind="text: name,
@@ -60,23 +60,23 @@
                     </div>
 
                 </div><!-- / .menus-container -->
-                <div class="app-column questions-container">
+                <div class="app-column initial-container" data-bind="visible: selectedForm() == null">
+                    It seems you need assistance
+                </div>
+                <div class="app-column questions-container" data-bind="visible: selectedForm">
 
                     <div id="question-tree" class="area-container">
-                        <h4 class="area-header">Questions</h4>
+                        <h4 class="area-header" data-bind="with: selectedForm"><span data-bind="text: name"></span> Questions</h4>
                         <div class="area-content area-content-nav">
                             <div class="nav-item">
                                 <button id="save-and-preview" class="btn btn-default">Save &amp; Preview</button>
                             </div>
                             <div data-bind="with: selectedForm">
-                                <span data-bind="text: name"></span>
                                 <ul data-bind="foreach: questions">
-                                    <li style="cursor: pointer;"
-                                        data-bind="text: id,
-                                                   click: function() { $root.selectedQuestion($data) },
-                                                   css: { active: $root.selectedQuestion() && $root.selectedQuestion().id == $data.id },
-                                                   "
-                                    ></li>
+                                    <li data-bind="css: { active: $root.selectedQuestion() && $root.selectedQuestion().id == $data.id }">
+                                        <a data-bind="text: id,
+                                                      click: function() { $root.selectedQuestion($data) }"></a>
+                                    </li>
                                 </ul>
                                 <div class="nav-item">
                                     <button data-bind="click: function() { $root.addQuestion(); }"
@@ -87,7 +87,7 @@
                     </div>
 
                 </div><!-- / .questions-container -->
-                <div class="app-column actions-container">
+                <div class="app-column actions-container"  data-bind="visible: selectedForm">
                     <div class="app-row active-form-area">
 
                         <div id="question-properties" class="area-container">

@@ -29,18 +29,22 @@ html, body, .main-content, .app-container {
 
 .menus-container {
   width: 20%;
-  left: 0; }
+  left: 0;
+  border-right: 1px solid #d9d9d7; }
 
 .questions-container {
   width: 20%;
   left: 20%;
-  border-left: 1px solid #d9d9d7; }
+  border-right: 1px solid #d9d9d7; }
 
 .actions-container {
   width: 60%;
   left: 40%;
-  overflow: hidden;
-  border-left: 1px solid #d9d9d7; }
+  overflow: hidden; }
+
+.initial-container {
+  width: 80%;
+  left: 20%; }
 
 .app-row {
   width: 100%;
