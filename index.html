@@ -26,14 +26,15 @@
                 <div class="col-sm-4">
                     <div id="question-tree">
                         <h4>Question Tree</h4>
+                        <button id="save-and-preview" class="btn btn-default">Save & Preview</button>
                         <div data-bind="with: selectedForm">
                             <span data-bind="text: name"></span>
                             <ul data-bind="foreach: questions">
                                 <li data-bind="text: id"></li>
                             </ul>
+                            <button id="add-question" class="btn btn-default">Add Question</button>
                         </div>
                     </div>
-                    <button id="add-question" class="btn btn-default">Add Question</button>
                 </div>
                 <div class="col-sm-6">
                     <div class="row">
