@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .navbar {
   min-height: 40px;
   height: 40px;
@@ -24,8 +25,7 @@ html, body, .main-content, .app-container {
   height: 100%;
   position: absolute;
   top: 0;
-  overflow-x: hidden;
-  overflow-y: scroll; }
+  overflow: hidden; }
 
 .menus-container {
   width: 20%;
@@ -44,7 +44,8 @@ html, body, .main-content, .app-container {
 
 .initial-container {
   width: 80%;
-  left: 20%; }
+  left: 20%;
+  overflow: hidden; }
 
 .app-row {
   width: 100%;
@@ -58,7 +59,8 @@ html, body, .main-content, .app-container {
 
 .area-container {
   position: relative;
-  height: 100%; }
+  height: 100%;
+  overflow: hidden; }
 
 .area-header {
   position: absolute;
@@ -84,12 +86,6 @@ html, body, .main-content, .app-container {
 
 .area-content-nav {
   padding: 30px 0 20px; }
-
-.menus-container .active {
-  background-color: #f9c700; }
-
-.questions-container .active {
-  background-color: #f9c700; }
 
 .helpbubble {
   position: relative;
@@ -166,5 +162,197 @@ html, body, .main-content, .app-container {
     border-color: transparent #9060c8; }
   .helpbubble-purple.helpbubble-top-left:after, .helpbubble-purple.helpbubble-bottom-left:after {
     border-color: #9060c8 transparent; }
+
+.appnav-menu {
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 12px; }
+  .appnav-menu .appnav-menu {
+    min-height: 15px; }
+  .appnav-menu > li {
+    width: 100%; }
+    .appnav-menu > li > .appnav-item {
+      width: 100%; }
+
+.appnav-menu > li > .appnav-item a {
+  float: left;
+  box-sizing: border-box;
+  line-height: 30px;
+  padding-right: 32px;
+  color: #181715;
+  transition: all 0.5s;
+  text-decoration: none !important; }
+
+.appnav-primary-icon {
+  font-size: 1.7rem;
+  color: #4e4b45; }
+
+.appnav-menu .appnav-primary-icon {
+  top: 6px;
+  position: absolute;
+  margin-right: 5px; }
+
+.appnav-primary-icon-lg {
+  font-size: 2rem; }
+
+.appnav-menu .appnav-primary-icon-lg {
+  top: 2px; }
+
+.appnav-menu > li > .appnav-item a.appnav-delete {
+  width: 32px;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 20; }
+  .appnav-menu > li > .appnav-item a.appnav-delete i {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    width: 32px;
+    height: 30px;
+    vertical-align: top;
+    line-height: 30px;
+    transition: margin 0.5s;
+    position: relative;
+    margin-left: -50px; }
+  .appnav-menu > li > .appnav-item a.appnav-delete:hover, .appnav-menu > li > .appnav-item a.appnav-delete:focus {
+    color: #e53e30; }
+
+.appnav-menu > li > .appnav-item a.appnav-title {
+  width: calc(100% - 32px);
+  position: relative; }
+  .appnav-menu > li > .appnav-item a.appnav-title > span {
+    position: relative;
+    line-height: 14px;
+    display: inline-block;
+    margin-left: 22px;
+    padding: 8px 0; }
+
+.appnav-menu > li > .appnav-item a.appnav-title-secondary {
+  width: calc(100% - 67px); }
+
+.appnav-menu > li > .appnav-item a.appnav-secondary {
+  width: 35px; }
+  .appnav-menu > li > .appnav-item a.appnav-secondary > i {
+    line-height: 30px; }
+  .appnav-menu > li > .appnav-item a.appnav-secondary:hover, .appnav-menu > li > .appnav-item a.appnav-secondary:focus {
+    color: #47b700; }
+    .appnav-menu > li > .appnav-item a.appnav-secondary:hover.appnav-settings, .appnav-menu > li > .appnav-item a.appnav-secondary:focus.appnav-settings {
+      color: #004ebc; }
+
+.appnav-menu > li > .appnav-item a.appnav-add {
+  width: 100%;
+  padding-left: 32px; }
+  .appnav-menu > li > .appnav-item a.appnav-add > .fa {
+    transition: all 0.2s;
+    margin-right: 8px;
+    margin-left: 5px;
+    position: relative; }
+  .appnav-menu > li > .appnav-item a.appnav-add:hover, .appnav-menu > li > .appnav-item a.appnav-add:focus {
+    text-decoration: none; }
+    .appnav-menu > li > .appnav-item a.appnav-add:hover > .fa, .appnav-menu > li > .appnav-item a.appnav-add:focus > .fa {
+      color: #47b700; }
+
+.appnav-show-on-hover {
+  opacity: 0; }
+
+.appnav-menu > li > .appnav-item {
+  box-sizing: content-box;
+  width: 100%;
+  overflow: hidden; }
+  .appnav-menu > li > .appnav-item:before, .appnav-menu > li > .appnav-item:after {
+    content: " ";
+    display: table; }
+  .appnav-menu > li > .appnav-item:after {
+    clear: both; }
+  .appnav-menu > li > .appnav-item:hover, .appnav-menu > li > .appnav-item:focus {
+    background-color: rgba(255, 255, 255, 0.6); }
+    .appnav-menu > li > .appnav-item:hover a, .appnav-menu > li > .appnav-item:focus a {
+      text-decoration: none;
+      outline: none; }
+      .appnav-menu > li > .appnav-item:hover a.appnav-delete i, .appnav-menu > li > .appnav-item:focus a.appnav-delete i {
+        margin-left: 0; }
+
+.appnav-menu-nested > li > .appnav-item > a.appnav-title {
+  padding-left: 10px;
+  border-left: 1px solid #b5b1aa; }
+.appnav-menu-nested > li > .appnav-item > a.appnav-title {
+  position: relative; }
+  .appnav-menu-nested > li > .appnav-item > a.appnav-title:before {
+    font-family: "WorkflowFontRegular";
+    content: "";
+    position: absolute;
+    left: -15px;
+    top: -5px;
+    font-size: 4.6rem;
+    color: #b5b1aa; }
+.appnav-menu-nested > li:last-child > .appnav-item > a.appnav-title {
+  border: none; }
+.appnav-menu-nested > li:last-child > .appnav-item > a.appnav-title:before {
+  content: "";
+  left: -14px; }
+.appnav-menu-nested > .appnav-primary-icon {
+  margin-left: 2px; }
+
+.appnav-highlight .appnav-item {
+  background-color: #d9d9d7; }
+
+.appnav-section-name {
+  background-color: #002c5f;
+  color: white;
+  padding: 10px 15px;
+  margin: 0;
+  font-size: 1.2rem;
+  text-transform: uppercase; }
+
+.appnav-link-full {
+  width: 100%;
+  position: relative; }
+  .appnav-link-full span {
+    display: block;
+    line-height: 14px;
+    padding: 8px 0;
+    margin-left: 22px; }
+  .appnav-link-full .appnav-primary-icon {
+    margin-top: 2px; }
+  .appnav-link-full .appnav-primary-icon-lg {
+    margin-top: 4px; }
+
+.appnav-menu .nav-divider {
+  margin: 0; }
+
+.appnav-toggle-label {
+  background-color: #d9d9d7;
+  padding: 5px 15px 0 15px;
+  font-weight: 600;
+  font-size: 10px; }
+
+.appnav-menu > li > .appnav-item.active {
+  background-color: #002c5f; }
+  .appnav-menu > li > .appnav-item.active .appnav-title {
+    border-color: #ededec; }
+  .appnav-menu > li > .appnav-item.active a {
+    color: white; }
+    .appnav-menu > li > .appnav-item.active a > .appnav-drag-icon:hover {
+      color: white;
+      cursor: move;
+      background-color: #181715; }
+    .appnav-menu > li > .appnav-item.active a:before {
+      color: #ededec; }
+  .appnav-menu > li > .appnav-item.active .appnav-primary-icon {
+    color: white; }
+  .appnav-menu > li > .appnav-item.active .appnav-delete:hover {
+    color: #efcfcb; }
+  .appnav-menu > li > .appnav-item.active .appnav-secondary {
+    color: #c7e3b8; }
+    .appnav-menu > li > .appnav-item.active .appnav-secondary:hover, .appnav-menu > li > .appnav-item.active .appnav-secondary:focus {
+      text-shadow: 0 0 10px #000; }
+    .appnav-menu > li > .appnav-item.active .appnav-secondary.appnav-settings {
+      color: #bcdeff; }
+      .appnav-menu > li > .appnav-item.active .appnav-secondary.appnav-settings:hover, .appnav-menu > li > .appnav-item.active .appnav-secondary.appnav-settings:focus {
+        color: #56acff;
+        text-shadow: 0 0 10px #000; }
 
 /*# sourceMappingURL=style.css.map */

@@ -41,6 +41,15 @@ $color-border: darken($cc-bg, 10)
 $area-header-height: 30px
 $helbubble-radius: 10px
 
+$font-size-base: 14px
+
+$z-index-trash: 20
+
+$appnav-width: 100%
+$appnav-trash-width: 32px
+$appnav-item-height: 30px
+$appnav-secondary-width: 35px
+
 
 .navbar
   min-height: $navbar-height
@@ -52,7 +61,7 @@ $helbubble-radius: 10px
   padding-top: 8px
   padding-bottom: 5px
   line-height: 25px
-  font-size: 14px
+  font-size: $font-size-base
   text-transform: uppercase
   color: $color-white !important
   font-weight: bold
@@ -68,8 +77,7 @@ html, body, .main-content, .app-container
   height: 100%
   position: absolute
   top: 0
-  overflow-x: hidden
-  overflow-y: scroll
+  overflow: hidden
 
 .menus-container
   width: 20%
@@ -89,6 +97,7 @@ html, body, .main-content, .app-container
 .initial-container
   width: 80%
   left: 20%
+  overflow: hidden
 
 .app-row
   width: 100%
@@ -103,6 +112,7 @@ html, body, .main-content, .app-container
 .area-container
   position: relative
   height: 100%
+  overflow: hidden
 
 .area-header
   position: absolute
@@ -128,12 +138,6 @@ html, body, .main-content, .app-container
 
 .area-content-nav
   padding: $area-header-height 0 20px
-
-.menus-container .active
-  background-color: $cc-light-warm-accent-mid
-
-.questions-container .active
-  background-color: $cc-light-warm-accent-mid
 
 .helpbubble 
   position: relative
@@ -219,4 +223,198 @@ html, body, .main-content, .app-container
   &.helpbubble-bottom-left:after
     border-color: $cc-dark-cool-accent-mid transparent
 
+.appnav-menu
+  width: $appnav-width
+  list-style: none
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  font-size: 12px
+  .appnav-menu
+    min-height: $appnav-item-height/2
+  > li
+    width: $appnav-width
+    > .appnav-item
+      width: $appnav-width
 
+.appnav-menu > li > .appnav-item a
+  float: left
+  box-sizing: border-box
+  line-height: $appnav-item-height
+  padding-right: $appnav-trash-width
+  color: $cc-text
+  transition: all .5s
+  text-decoration: none !important
+
+.appnav-primary-icon
+  font-size: 1.7rem
+  color: lighten($cc-text, 20)
+
+.appnav-menu .appnav-primary-icon
+  top: 6px
+  position: absolute
+  margin-right: 5px
+
+.appnav-primary-icon-lg
+  font-size: 2rem
+
+.appnav-menu .appnav-primary-icon-lg
+  top: 2px
+
+.appnav-menu > li > .appnav-item a.appnav-delete
+  width: $appnav-trash-width
+  transition: all .2s
+  position: relative
+  z-index: $z-index-trash
+  i
+    display: block
+    text-align: center
+    cursor: pointer
+    width: $appnav-trash-width
+    height: $appnav-item-height
+    vertical-align: top
+    line-height: $appnav-item-height
+    transition: margin .5s
+    position: relative
+    margin-left: -50px
+  &:hover, &:focus
+    color: $cc-att-neg-mid
+
+.appnav-menu > li > .appnav-item a.appnav-title
+  width: calc(#{$appnav-width} - #{$appnav-trash-width})
+  position: relative
+  > span
+    position: relative
+    line-height: 14px
+    display: inline-block
+    margin-left: 22px
+    padding: 8px 0
+
+.appnav-menu > li > .appnav-item a.appnav-title-secondary
+  width: calc(#{$appnav-width} - #{$appnav-trash-width + $appnav-secondary-width})
+
+.appnav-menu > li > .appnav-item a.appnav-secondary
+  width: $appnav-secondary-width
+  > i
+    line-height: $appnav-item-height
+  &:hover, &:focus
+    color: $cc-att-pos-mid
+    &.appnav-settings
+      color: $cc-brand-mid
+
+.appnav-menu > li > .appnav-item a.appnav-add
+  width: $appnav-width
+  padding-left: $appnav-trash-width
+  > .fa
+    transition: all .2s
+    margin-right: 8px
+    margin-left: 5px
+    position: relative
+  &:hover, &:focus
+    text-decoration: none
+    > .fa
+      color: $cc-att-pos-mid
+
+.appnav-show-on-hover
+  opacity: 0
+
+.appnav-menu > li > .appnav-item
+  box-sizing: content-box
+  width: $appnav-width
+  overflow: hidden
+  &:before,
+  &:after
+    content: " "
+    display: table
+  &:after
+    clear: both
+  &:hover, &:focus
+    background-color: rgba(255,255,255,0.6)
+    a
+      text-decoration: none
+      outline: none
+      &.appnav-delete
+        i
+          margin-left: 0
+
+.appnav-menu-nested
+  > li > .appnav-item > a.appnav-title
+    padding-left: 10px
+    border-left: 1px solid lighten($cc-text, 60)
+  > li > .appnav-item > a.appnav-title
+    position: relative
+    &:before
+      font-family: "WorkflowFontRegular"
+      content: '\f00a'
+      position: absolute
+      left: -15px
+      top: -5px
+      font-size: 4.6rem
+      color: lighten($cc-text, 60)
+  > li:last-child > .appnav-item > a.appnav-title
+    border: none
+  > li:last-child > .appnav-item > a.appnav-title:before
+    content: '\f00b'
+    left: -14px
+  > .appnav-primary-icon
+    margin-left: 2px
+
+.appnav-highlight .appnav-item
+  background-color: darken($cc-bg, 10)
+
+.appnav-section-name
+  background-color: $cc-brand-low
+  color: white
+  padding: 10px 15px
+  margin: 0
+  font-size: 1.2rem
+  text-transform: uppercase
+
+.appnav-link-full
+  width: 100%
+  position: relative
+  span
+    display: block
+    line-height: 14px
+    padding: 8px 0
+    margin-left: 22px
+  .appnav-primary-icon
+    margin-top: 2px
+  .appnav-primary-icon-lg
+    margin-top: 4px
+
+.appnav-menu .nav-divider
+  margin: 0
+
+.appnav-toggle-label
+  background-color: darken($cc-bg, 10)
+  padding: 5px 15px 0 15px
+  font-weight: 600
+  font-size: 10px
+
+.appnav-menu > li > .appnav-item.active
+  background-color: $cc-brand-low
+  .appnav-title
+    border-color: darken($cc-bg, 2)
+  a
+    color: white
+    > .appnav-drag-icon
+      &:hover
+        color: white
+        cursor: move
+        background-color: $cc-text
+    &:before
+      color: darken($cc-bg, 2)
+  .appnav-primary-icon
+    color: white
+  .appnav-delete:hover
+    color: $cc-att-neg-hi
+  .appnav-secondary
+    color: darken($cc-att-pos-hi, 5)
+    &:hover, &:focus
+      text-shadow: 0 0 10px #000
+    &.appnav-settings
+      color: $cc-brand-hi
+      &:hover, &:focus
+        color: darken($cc-brand-hi, 20)
+        text-shadow: 0 0 10px #000
