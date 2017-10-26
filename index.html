@@ -23,7 +23,7 @@
                     </ul>
                     <button id="add-menu" class="btn btn-default">Add Menu</button>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <div id="question-tree">
                         <h4>Question Tree</h4>
                         <button id="save-and-preview" class="btn btn-default">Save & Preview</button>
@@ -36,15 +36,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                     <div class="row">
                         <div class="col-sm-12">
                             <div id="question-properties">
-                                <h4>Question Properties</h4>
+                                <h4>Question Properties (will toggle with app preview)</h4>
                                 <div data-bind="with: selectedQuestion">
                                     <div class="form-horizontal">
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">Display Text</label>
+                                            <label class="col-sm-4 control-label">display text</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" id="question-display" data-bind="value: display">
                                             </div>
@@ -68,7 +68,29 @@
                                 </div>
                             </div>
                             <div id="app-preview">
-                                TODO: markup for app preview
+                                <h4>App Preview (will toggle with question properties, will show either case list or form preview)</h4>
+                                <div id="preview-case-list">
+                                    <h5>Case List</h5>
+                                    <ul data-bind="foreach: cases">
+                                        <li data-bind="text: name"></li>
+                                    </ul>
+                                </div>
+                                <div id="preview-form">
+                                    <div data-bind="with: selectedForm">
+                                        <h5 data-bind="text: name"></h5>
+                                        <div class="form-horizontal">
+                                            <!-- ko foreach: questions -->
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" data-bind="text: display"></label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" data-bind="attr: { id: id }">
+                                                    </div>
+                                                </div>
+                                            <!-- /ko -->
+                                        </div>
+                                        <button id="add-column" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
