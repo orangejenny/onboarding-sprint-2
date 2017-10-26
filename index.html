@@ -61,7 +61,17 @@
 
                 </div><!-- / .menus-container -->
                 <div class="app-column initial-container" data-bind="visible: selectedForm() == null">
-                    It seems you need assistance
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="helpbubble helpbubble-primary helpbubble-left pull-left" style="max-width: 310px;">
+                                    <p class="lead">
+                                        Please click <i class="fa fa-plus"></i> <strong>Add Menu...</strong> to start building your App!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="app-column questions-container" data-bind="visible: selectedForm">
 
