@@ -253,7 +253,7 @@
                                                             <span data-bind="text: caseName"></span>
                                                         </td>
                                                         <!-- ko foreach: $parent.questions -->
-                                                            <td data-bind="text: $parent.questions[id]"></td>
+                                                            <td data-bind="text: $parent.answers[$data.id()]"></td>
                                                         <!-- /ko -->
                                                     </tr>
                                                 </tbody>

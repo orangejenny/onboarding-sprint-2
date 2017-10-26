@@ -83,10 +83,10 @@ var SprintModel = function() {
                 minute: now.getMinutes(),
                 second: now.getSeconds(),
             }),
-            questions: _.reduce($("#preview-form input"), function(memo, input) { memo[input.id] = input.value; return memo; }, {}),
+            answers: _.reduce($("#preview-form input"), function(memo, input) { memo[input.id] = input.value; return memo; }, {}),
         });
 
-        if (_.compact(_.values(submission.questions)).length !== _.keys(submission.questions).length) {
+        if (_.find(submission.answers, function(x) { return !x; })) {
             alert("Please answer all questions");
             return;
         }
@@ -95,7 +95,7 @@ var SprintModel = function() {
         var properties = {};
         _.each(self.selectedForm().questions(), function(q) {
             if (q.saveToCase()) {
-                properties[q.saveToCase()] = submission.questions[q.id()];
+                properties[q.saveToCase()] = submission.answers[q.id()];
             }
         });
         if (form.requiresCase) {
