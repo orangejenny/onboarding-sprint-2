@@ -56,6 +56,7 @@ var SprintModel = function() {
     });
 
     self.selectedForm(self.menus()[0].forms[0]);
+    self.selectedQuestion(self.selectedForm().questions[0]);
 
     self.cases.push({
         name: 'Yury',
@@ -69,18 +70,6 @@ var SprintModel = function() {
         name: 'Amy',
         properties: {'age': 37, 'color': 'yellow'},
     });
-
-    /*
-        forms
-            questions
-                display
-                id
-                saveToCase
-            requiresCase
-            submissions
-                time
-                responses
-    */
 };
 
 $(function() {
