@@ -13,6 +13,13 @@
         <link type="text/css"
               rel="stylesheet"
               media="all" href="css/style.css" />
+        <script>
+            $(function () {
+                $('.no-click').click(function(e) {
+                    e.preventDefault();
+                });
+            });
+        </script>
     </head>
     <body>
         <div id="sprint" class="main-content">
@@ -32,13 +39,12 @@
                         <div class="area-content area-content-nav">
                             <ul class="nav nav-pills nav-stacked" data-bind="foreach: menus">
                                 <li>
-                                    Forms
+                                    <a href="#" class="nav-menu no-click">Forms</a>
                                     <ul class="nav nav-pills nav-stacked" data-bind="foreach: forms">
-                                        <li style="cursor: pointer;"
-                                            data-bind="text: name,
-                                                       click: function() { $root.selectedForm($data) },
-                                                       css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }"
-                                        ></li>
+                                        <li data-bind="css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }">
+                                            <a data-bind="text: name,
+                                                          click: function() { $root.selectedForm($data) }"></a>
+                                        </li>
                                     </ul>
                                     <div class="nav-item">
                                         <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">
