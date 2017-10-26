@@ -61,10 +61,19 @@ var SprintModel = function() {
         });
     };
 
-    self.populate = function() {
+    self.addMenu = function() {
+        var index = self.menus().length;
         self.menus.push({ forms: ko.observableArray([]) });
-        self.addForm(0, false);
-        self.addForm(0, true);
+        self.addForm(index, false);
+        self.addForm(index, true);
+    };
+
+    self.allForms = ko.computed(function() {
+        return _.flatten(_.map(self.menus(), function(m) { return m.forms(); }))
+    });
+
+    self.populate = function() {
+        self.addMenu();
 
         self.selectedForm(self.menus()[0].forms()[0]);
         self.selectedQuestion(self.selectedForm().questions[0]);

@@ -32,7 +32,7 @@
                             <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">Add Form</button>
                         </li>
                     </ul>
-                    <button id="add-menu" class="btn btn-default">Add Menu</button>
+                    <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
 
                 </div><!-- / .menus-container -->
                 <div class="app-column questions-container">
@@ -114,10 +114,8 @@
                         <h4>Data Preview</h4>
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
-                            <!-- ko if: menus().length -->
-                            <!-- ko foreach: menus()[0].forms -->
+                            <!-- ko foreach: allForms -->
                                 <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + $index() }"></a></li>
-                            <!-- /ko -->
                             <!-- /ko -->
                         </ul>
                         <div class="tab-content">
@@ -149,8 +147,7 @@
                             </div><!-- /Cases tab -->
 
                             <!-- FORMS TABS -->
-                            <!-- ko if: menus().length -->
-                            <!-- ko foreach: menus()[0].forms -->
+                            <!-- ko foreach: allForms -->
                                 <div class="tab-pane" data-bind="attr: { id: 'form' + $index() }">
                                     <table class="table">
                                         <thead>
@@ -175,7 +172,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            <!-- /ko -->
                             <!-- /ko -->
                             <!-- /FORMS TABS -->
 
