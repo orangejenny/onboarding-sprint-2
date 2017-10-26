@@ -90,6 +90,9 @@
                                                 <!-- ko foreach: caseSchema -->
                                                     <th data-bind="text: $data"></th>
                                                 <!-- /ko -->
+                                                <th>
+                                                    <button id="add-column" class="btn btn-default">+</button>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody data-bind="foreach: cases">
@@ -98,6 +101,7 @@
                                                 <!-- ko foreach: $root.caseSchema -->
                                                     <td data-bind="text: $parent.properties[$data]"></td>
                                                 <!-- /ko -->
+                                                <td>&nbsp;</td>
                                             </tr>
                                         </tbody>
                                     </table>
