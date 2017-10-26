@@ -8,6 +8,7 @@ var SprintModel = function() {
         return _.without(_.uniq(_.flatten(_.map(_.pluck(self.cases(), 'properties'), function(p) { return _.keys(p); }))), "name");
     });
 
+    self.caseCount = 0;                         // generate case IDs
     self.formCount = 0;                         // generate form IDs
     self.questionCount = 0;                     // generate question IDs
 
@@ -15,9 +16,30 @@ var SprintModel = function() {
     self.selectedQuestion = ko.observable();    // for knowing what to display in question properties
     self.selectedCase = ko.observable();        // for previewing a form that requires a case
 
+    self.selectedCaseName = ko.computed(function() {
+        if (self.selectedCase()) {
+            var selected = _.findWhere(self.cases(), {id: self.selectedCase()})
+            if (selected) {
+                return selected.name;
+            }
+        }
+        return "";
+    });
+
     self.previewing = ko.observable(false);
     self.notPreviewing = ko.computed(function() {
         return !self.previewing();
+    });
+    self.previewingCaseList = ko.computed(function() {
+        return self.previewing() && self.selectedForm().requiresCase && !self.selectedCase();
+    });
+    self.previewingForm = ko.computed(function() {
+        return self.previewing() && (!self.selectedForm().requiresCase || self.selectedCase());
+    });
+    self.previewing.subscribe(function(newValue) {
+        if (!newValue) {
+            self.selectedCase(null);
+        }
     });
 
     var _formSubmissions = function(requiresCase) {
@@ -63,7 +85,8 @@ var SprintModel = function() {
                 }
             });
             self.cases.push({
-                name: $("#preview-form input:first").val(),
+                id: ++self.caseCount,
+                name: properties.name || $("#preview-form input:first").val(),
                 properties: properties,
             });
         }
@@ -95,7 +118,7 @@ var SprintModel = function() {
 
     self.addForm = function(menuIndex, requiresCase) {
         var form = {
-            id: 'form' + self.formCount++,
+            id: 'form' + ++self.formCount,
             name: requiresCase ? "Followup Form" : "Registration Form",
             requiresCase: requiresCase,
             questions: [],
@@ -141,14 +164,17 @@ var SprintModel = function() {
         self.selectedForm(menu.forms()[0]);
 
         self.cases.push({
+            id: ++self.caseCount,
             name: 'Yury',
             properties: {'age': 38, 'color': 'red'},
         });
         self.cases.push({
+            id: ++self.caseCount,
             name: 'Brandon',
             properties: {'age': 33, 'color': 'orange'},
         });
         self.cases.push({
+            id: ++self.caseCount,
             name: 'Amy',
             properties: {'age': 37, 'color': 'yellow'},
         });

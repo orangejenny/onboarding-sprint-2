@@ -132,14 +132,19 @@
                         <div id="app-preview" 
                              class="area-container"
                              data-bind="visible: $root.previewing">
-                            <h4 class="area-header">App Preview</h4>
-                            <div id="preview-case-list" class="area-content hide">
+                            <h4 class="area-header">
+                                App Preview
+                                <!-- ko if: selectedCase -->
+                                > <span data-bind="text: selectedCaseName"></span>
+                                <!-- /ko -->
+                            </h4>
+                            <div id="preview-case-list" class="area-content" data-bind="visible: $root.previewingCaseList">
                                 <h5>Case List</h5>
                                 <ul data-bind="foreach: cases">
-                                    <li data-bind="text: name"></li>
+                                    <li data-bind="text: name, click: function() { $root.selectedCase($data.id) }"></li>
                                 </ul>
                             </div>
-                            <div id="preview-form">
+                            <div id="preview-form" data-bind="visible: $root.previewingForm">
                                 <div data-bind="with: selectedForm">
                                     <h5 data-bind="text: name"></h5>
                                     <div class="form-horizontal">
