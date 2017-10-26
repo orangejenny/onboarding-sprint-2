@@ -1,0 +1,51 @@
+.navbar {
+  min-height: 40px;
+  height: 40px;
+  margin-bottom: 0; }
+
+.navbar-brand {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 25px;
+  font-size: 14px;
+  text-transform: uppercase; }
+
+html, body, .main-content, .app-container {
+  height: 100%; }
+
+.app-container {
+  height: calc(100% - 40px);
+  position: relative; }
+
+.app-column {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
+.menus-container {
+  width: 20%;
+  left: 0; }
+
+.questions-container {
+  width: 30%;
+  left: 20%; }
+
+.actions-container {
+  width: 50%;
+  left: 50%;
+  overflow: hidden; }
+
+.app-row {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll; }
+
+.active-form-area {
+  height: 50%; }
+
+.preview-data-area {
+  height: 50%; }
+
+/*# sourceMappingURL=style.css.map */
