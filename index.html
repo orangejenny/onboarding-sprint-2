@@ -10,12 +10,26 @@
         <div id="sprint" class="container">
             <div class="row">
                 <div class="col-sm-2">
-                    APP MENU
-                    <br>TODO: list forms/menus
+                    <h1>My App</h1>
+                    <ul data-bind="foreach: menus">
+                        <li>
+                            Forms
+                            <ul data-bind="foreach: forms">
+                                <li data-bind="text: name"></li>
+                            </ul>
+                            <button id="add-form" class="btn default-btn">Add Form</button>
+                        </li>
+                    </ul>
+                    <button id="add-menu" class="btn default-btn">Add Menu</button>
                 </div>
                 <div class="col-sm-4">
-                    QUESTION TREE
-                    <br>TODO: list questions for selected form
+                    <div id="question-tree" data-bind="with: selectedForm">
+                        <span data-bind="text: name"></span>
+                        <ul data-bind="foreach: questions">
+                            <li data-bind="text: id"></li>
+                        </ul>
+                    </div>
+                    <button id="add-question" class="btn default-btn">Add Question</button>
                 </div>
                 <div class="col-sm-6">
                     <div class="row">
