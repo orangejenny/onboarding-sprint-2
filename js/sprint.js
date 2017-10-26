@@ -16,18 +16,42 @@ var SprintModel = function() {
 
     var _formSubmissions = function(requiresCase) {
         if (requiresCase) {
-            return [
+            return ko.observableArray([
                 { date: "2017-10-21 12:31", caseName: 'Yury', questions: { color: 'pink' } },
                 { date: "2017-10-21 12:36", caseName: 'Yury', questions: { color: 'red' } },
                 { date: "2017-10-21 12:41", caseName: 'Brandon', questions: { color: 'orange' } },
                 { date: "2017-10-21 12:51", caseName: 'Amy', questions: { color: 'yellow' } },
-            ];
+            ]);
         }
-        return [
-            { date: "2017-10-11 11:31", questions: { name: 'Yury', age: 38 } },
+        return ko.observableArray([
+            /*{ date: "2017-10-11 11:31", questions: { name: 'Yury', age: 38 } },
             { date: "2017-10-11 11:41", questions: { name: 'Brandon', age: 33 } },
-            { date: "2017-10-11 11:51", questions: { name: 'Amy', age: 37 } },
-        ];
+            { date: "2017-10-11 11:51", questions: { name: 'Amy', age: 37 } },*/
+        ]);
+    };
+
+    self.addSubmission = function() {
+        var form = self.selectedForm(),
+            now = new Date();
+        var submission = {
+            date: _.template("<%= year %>-<%= month %>-<%= day %> <%= hour %>:<%= minute %>:<%= second %>")({
+                year: now.getFullYear(),
+                month: now.getMonth() + 1,
+                day: now.getDate(),
+                hour: now.getHours(),
+                minute: now.getMinutes(),
+                second: now.getSeconds(),
+            }),
+            questions: _.reduce($("#preview-form input"), function(memo, input) { memo[input.id] = input.value; return memo; }, {})
+        };
+        if (form.requiresCase) {
+            // TODO: set submission.caseName
+        }
+        if (_.compact(_.values(submission.questions)).length !== _.keys(submission.questions).length) {
+            alert("Please answer all questions");
+            return;
+        }
+        form.submissions.push(submission);
     };
 
     self.addQuestion = function(properties) {
