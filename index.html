@@ -29,7 +29,7 @@
                             <ul data-bind="foreach: forms">
                                 <li data-bind="text: name"></li>
                             </ul>
-                            <button id="add-form" class="btn btn-default">Add Form</button>
+                            <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">Add Form</button>
                         </li>
                     </ul>
                     <button id="add-menu" class="btn btn-default">Add Menu</button>
