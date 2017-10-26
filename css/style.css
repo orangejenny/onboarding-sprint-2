@@ -78,4 +78,5 @@ html, body, .main-content, .app-container {
 .menus-container .active {
   background-color: #f9c700; }
 
-/*# sourceMappingURL=style.css.map */
+.questions-container .active {
+  background-color: #f9c700; }
