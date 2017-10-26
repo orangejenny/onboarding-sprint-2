@@ -13,6 +13,13 @@
         <link type="text/css"
               rel="stylesheet"
               media="all" href="css/style.css" />
+        <script>
+            $(function () {
+                $('.no-click').on('click', function(e) {
+                    e.preventDefault();
+                });
+            });
+        </script>
     </head>
     <body>
         <div id="sprint" class="main-content">
@@ -29,51 +36,58 @@
 
                     <div class="area-container">
                         <h4 class="area-header">Menus</h4>
-                        <div class="area-content">
-                            <ul data-bind="foreach: menus">
+                        <div class="area-content area-content-nav">
+                            <ul class="nav nav-pills nav-stacked" data-bind="foreach: menus">
                                 <li>
-                                    Forms
-                                    <ul data-bind="foreach: forms">
-                                        <li style="cursor: pointer;"
-                                            data-bind="text: name,
-                                                       click: function() { $root.selectedForm($data) },
-                                                       css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }"
-                                        ></li>
+                                    <a href="#" class="nav-menu no-click">Menu</a>
+                                    <ul class="nav nav-pills nav-stacked" data-bind="foreach: forms">
+                                        <li data-bind="css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }">
+                                            <a data-bind="text: name,
+                                                          click: function() { $root.selectedForm($data) }"></a>
+                                        </li>
                                     </ul>
-
-                                    <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">
-                                        <i class="fa fa-plus"></i> Add Form
-                                    </button>
+                                    <div class="nav-item">
+                                        <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">
+                                            <i class="fa fa-plus"></i> Add Form
+                                        </button>
+                                    </div>
                                 </li>
                             </ul>
-                            <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
+                            <div class="nav-item">
+                                <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
+                            </div>
                         </div>
                     </div>
 
                 </div><!-- / .menus-container -->
-                <div class="app-column questions-container">
+                <div class="app-column initial-container" data-bind="visible: selectedForm() == null">
+                    It seems you need assistance
+                </div>
+                <div class="app-column questions-container" data-bind="visible: selectedForm">
 
                     <div id="question-tree" class="area-container">
-                        <h4 class="area-header">Questions</h4>
-                        <div class="area-content">
-                            <button id="save-and-preview" class="btn btn-default">Save & Preview</button>
+                        <h4 class="area-header" data-bind="with: selectedForm"><span data-bind="text: name"></span> Questions</h4>
+                        <div class="area-content area-content-nav">
+                            <div class="nav-item">
+                                <button id="save-and-preview" class="btn btn-default">Save &amp; Preview</button>
+                            </div>
                             <div data-bind="with: selectedForm">
-                                <span data-bind="text: name"></span>
                                 <ul data-bind="foreach: questions">
-                                    <li style="cursor: pointer;"
-                                        data-bind="text: id,
-                                                   click: function() { $root.selectedQuestion($data) },
-                                                   css: { active: $root.selectedQuestion() && $root.selectedQuestion().id == $data.id },
-                                                   "
-                                    ></li>
+                                    <li data-bind="css: { active: $root.selectedQuestion() && $root.selectedQuestion().id == $data.id }">
+                                        <a data-bind="text: id,
+                                                      click: function() { $root.selectedQuestion($data) }"></a>
+                                    </li>
                                 </ul>
-                                <button data-bind="click: function() { $root.addQuestion(); }" class="btn btn-default">Add Question</button>
+                                <div class="nav-item">
+                                    <button data-bind="click: function() { $root.addQuestion(); }"
+                                            class="btn btn-default">Add Question</button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div><!-- / .questions-container -->
-                <div class="app-column actions-container">
+                <div class="app-column actions-container"  data-bind="visible: selectedForm">
                     <div class="app-row active-form-area">
 
                         <div id="question-properties" class="area-container">

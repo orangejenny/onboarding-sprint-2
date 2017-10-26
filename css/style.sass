@@ -72,22 +72,25 @@ html, body, .main-content, .app-container
 .menus-container
   width: 20%
   left: 0
+  border-right: 1px solid $color-border
 
 .questions-container
   width: 20%
   left: 20%
-  border-left: 1px solid $color-border
+  border-right: 1px solid $color-border
 
 .actions-container
   width: 60%
   left: 40%
   overflow: hidden
-  border-left: 1px solid $color-border
+
+.initial-container
+  width: 80%
+  left: 20%
 
 .app-row
   width: 100%
-  overflow-x: hidden
-  overflow-y: scroll
+  overflow: hidden
 
 .active-form-area
   height: 50%
@@ -97,7 +100,7 @@ html, body, .main-content, .app-container
 
 .area-container
   position: relative
-  padding-top: $area-header-height + 1px
+  height: 100%
 
 .area-header
   position: absolute
@@ -111,15 +114,23 @@ html, body, .main-content, .app-container
   background-color: $cc-bg
   border-bottom: 1px solid $color-border
   color: $cc-brand-low
+  z-index: 10
 
 .area-content
   background-color: $color-white
-  padding: 15px 20px
+  padding: $area-header-height+10px 15px 20px
   font-size: 12px
+  height: 100%
+  overflow-x: hidden
+  overflow-y: scroll
 
+.area-content-nav
+  padding: $area-header-height 0 20px
 
 .menus-container .active
   background-color: $cc-light-warm-accent-mid
 
 .questions-container .active
   background-color: $cc-light-warm-accent-mid
+
+
