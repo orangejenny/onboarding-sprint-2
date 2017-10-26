@@ -79,7 +79,7 @@
                         <h4 class="area-header" data-bind="with: selectedForm"><span data-bind="text: name"></span> Questions</h4>
                         <div class="area-content area-content-nav">
                             <div class="nav-item">
-                                <button id="save-and-preview" class="btn btn-default">Save &amp; Preview</button>
+                                <button data-bind="click: function() { $root.previewing(true); }" class="btn btn-default">Save &amp; Preview</button>
                             </div>
                             <div data-bind="with: selectedForm">
                                 <ul data-bind="foreach: questions">
@@ -100,8 +100,8 @@
                 <div class="app-column actions-container"  data-bind="visible: selectedForm">
                     <div class="app-row active-form-area">
 
-                        <div id="question-properties" class="area-container">
-                            <h4 class="area-header">Question Properties (will toggle with app preview)</h4>
+                        <div id="question-properties" class="area-container" data-bind="visible: $root.notPreviewing">
+                            <h4 class="area-header">Question Properties</h4>
                             <div data-bind="with: selectedQuestion" class="area-content">
                                 <div class="form-horizontal">
                                     <div class="form-group">
@@ -129,10 +129,11 @@
                             </div>
                         </div><!-- / #question-properties -->
 
-                        <div id="app-preview" style="display: none;"
-                             class="area-container">
-                            <h4 class="area-header">App Preview (will toggle with question properties, will show either case list or form preview)</h4>
-                            <div id="preview-case-list" class="area-content">
+                        <div id="app-preview" 
+                             class="area-container"
+                             data-bind="visible: $root.previewing">
+                            <h4 class="area-header">App Preview</h4>
+                            <div id="preview-case-list" class="area-content hide">
                                 <h5>Case List</h5>
                                 <ul data-bind="foreach: cases">
                                     <li data-bind="text: name"></li>

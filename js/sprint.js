@@ -15,6 +15,11 @@ var SprintModel = function() {
     self.selectedQuestion = ko.observable();    // for knowing what to display in question properties
     self.selectedCase = ko.observable();        // for previewing a form that requires a case
 
+    self.previewing = ko.observable(false);
+    self.notPreviewing = ko.computed(function() {
+        return !self.previewing();
+    });
+
     var _formSubmissions = function(requiresCase) {
         if (requiresCase) {
             return ko.observableArray([
@@ -26,6 +31,7 @@ var SprintModel = function() {
         }
         return ko.observableArray([]);
     };
+
 
     self.submitForm = function(properties) {
         var form = self.selectedForm(),
@@ -80,6 +86,11 @@ var SprintModel = function() {
 
     self.selectedForm.subscribe(function(newValue) {
         self.selectedQuestion(_.first(newValue.questions));
+        self.previewing(false);
+    });
+
+    self.selectedQuestion.subscribe(function(newValue) {
+        self.previewing(false);
     });
 
     self.addForm = function(menuIndex, requiresCase) {
