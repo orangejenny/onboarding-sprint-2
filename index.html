@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="js/sprint.js"></script>
+    </head>
+    <body>
+        <div id="sprint" class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    APP MENU
+                    <br>TODO: list forms/menus
+                </div>
+                <div class="col-sm-4">
+                    QUESTION TREE
+                    <br>TODO: list questions for selected form
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            QUESTION PROPERTIES
+                            <br>TODO: list question properties
+                            <br>TODO: app preview
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            TODO: forms & cases tab setup
+                            <ul data-bind="foreach: cases">
+                                <li data-bind="text: name"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
