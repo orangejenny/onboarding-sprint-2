@@ -16,6 +16,14 @@ var SprintModel = function() {
     self.selectedQuestion = ko.observable();    // for knowing what to display in question properties
     self.selectedCase = ko.observable();        // for previewing a form that requires a case
 
+    // For populating dropdown when adding a new case property
+    self.selectedFormQuestions = ko.computed(function() {
+        if (self.selectedForm()) {
+            return self.selectedForm().questions;
+        }
+        return [];
+    });
+
     self.selectedCaseName = ko.computed(function() {
         if (self.selectedCase()) {
             var selected = _.findWhere(self.cases(), {id: self.selectedCase()})
@@ -64,6 +72,10 @@ var SprintModel = function() {
         return ko.observableArray([]);
     };
 
+    self.saveProperty = function() {
+        // TODO
+        alert("do stuff");
+    };
 
     self.submitForm = function(properties) {
         var form = self.selectedForm(),
@@ -89,7 +101,7 @@ var SprintModel = function() {
 
         // Create or update case, and actually submit form
         var properties = {};
-        _.each(self.selectedForm().questions, function(q) {
+        _.each(self.selectedForm().questions(), function(q) {
             if (q.saveToCase) {
                 properties[q.saveToCase] = submission.questions[q.id];
             }
@@ -121,11 +133,10 @@ var SprintModel = function() {
         form.questions.push(question);
         self.selectedForm(form);
         self.selectedQuestion(question);
-        // TODO: this doesn't update the table of form submissions' headers
     };
 
     self.selectedForm.subscribe(function(newValue) {
-        self.selectedQuestion(_.first(newValue.questions));
+        self.selectedQuestion(_.first(newValue.questions()));
         self.previewing(false);
     });
 
@@ -138,7 +149,7 @@ var SprintModel = function() {
             id: 'form' + ++self.formCount,
             name: requiresCase ? "Followup Form" : "Registration Form",
             requiresCase: requiresCase,
-            questions: [],
+            questions: ko.observableArray([]),
             submissions: _formSubmissions(requiresCase),
         };
         self.menus()[menuIndex].forms.push(form);

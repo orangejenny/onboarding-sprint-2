@@ -26,7 +26,7 @@
             <nav class="navbar navbar-default navbar-static-top">
                 <div class="container-fluid">
                     <button class="pull-right btn btn-danger btn-xs" data-bind="click: populate" style="margin: 5px;">
-                        Populate with sample data (remove for user testing)
+                        Populate with sample data
                     </button>
                     <a class="navbar-brand" href="#">My App</a>
                 </div>
@@ -194,7 +194,7 @@
                                                         <th data-bind="text: $data"></th>
                                                     <!-- /ko -->
                                                     <th>
-                                                        <button id="add-column" class="btn btn-default">+</button>
+                                                        <button id="add-column" class="btn btn-default" data-toggle="modal" data-target="#add-property-modal">+</button>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -247,5 +247,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" tabindex="-1" id="add-property-modal" data-bind="with: selectedForm">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Save Question to Case</h4>
+                    </div>
+                    <div class="modal-body">
+                        <select data-bind="foreach: questions">
+                            <option data-bind="text: name, attr: { value: id }"></option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: saveProperty">Save</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
     </body>
 </html>
