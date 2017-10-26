@@ -39,7 +39,7 @@
 
                     <div class="area-container">
                         <h4 class="area-header">Menus</h4>
-                        <div class="area-content area-content-nav">
+                        <ul class="area-content area-content-nav">
                             <ul class="appnav-menu appnav-module" data-bind="foreach: menus">
                                 <li>
                                     <div class="appnav-item">
@@ -66,9 +66,14 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <div class="nav-item">
-                                <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
-                            </div>
+                            <ul class="appnav-menu">
+                                <li class="sort-disabled">
+                                    <div class="appnav-item">
+                                        <a href="#" data-bind="click: addMenu" class="appnav-add">
+                                            <i class="new-module-icon fa fa-plus"></i> Add...</a>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
