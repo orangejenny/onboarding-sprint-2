@@ -91,4 +91,80 @@ html, body, .main-content, .app-container {
 .questions-container .active {
   background-color: #f9c700; }
 
+.helpbubble {
+  position: relative;
+  padding: 20px 20px 10px;
+  box-shadow: 2px 3px 15px rgba(0, 0, 0, 0.45);
+  color: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-right: 15px;
+  margin-top: 15px; }
+  .helpbubble:after {
+    content: "";
+    position: absolute;
+    border-style: solid;
+    display: block;
+    width: 0;
+    z-index: 1; }
+
+.helpbubble-no-arrow:after {
+  display: none; }
+
+.helpbubble-left:after {
+  border-width: 15px 15px 15px 0;
+  left: -15px;
+  top: 20px; }
+
+.helpbubble-right:after {
+  border-width: 15px 0 15px 15px;
+  right: -15px;
+  top: 20px; }
+
+.helpbubble-top-left:after {
+  border-width: 0 15px 15px;
+  top: -15px;
+  left: 20px; }
+
+.helpbubble-bottom-left:after {
+  border-width: 15px 15px 0;
+  bottom: -15px;
+  left: 20px; }
+
+.helpbubble .close {
+  position: absolute;
+  right: 8px;
+  top: 3px;
+  display: block;
+  padding: 5px 10px;
+  line-height: 20px;
+  color: white;
+  opacity: 0.5;
+  transition: opacity 1s; }
+  .helpbubble .close:hover {
+    opacity: 1; }
+
+.helpbubble-primary {
+  background: #004ebc; }
+  .helpbubble-primary.helpbubble-left:after, .helpbubble-primary.helpbubble-right:after {
+    border-color: transparent #004ebc; }
+  .helpbubble-primary.helpbubble-top-left:after, .helpbubble-primary.helpbubble-bottom-left:after {
+    border-color: #004ebc transparent; }
+
+.helpbubble-secondary {
+  background: #00bdc5; }
+  .helpbubble-secondary.helpbubble-left:after, .helpbubble-secondary.helpbubble-right:after {
+    border-color: transparent #00bdc5; }
+  .helpbubble-secondary.helpbubble-top-left:after, .helpbubble-secondary.helpbubble-bottom-left:after {
+    border-color: #00bdc5 transparent; }
+
+.helpbubble-purple {
+  background: #9060c8; }
+  .helpbubble-purple.helpbubble-left:after, .helpbubble-purple.helpbubble-right:after {
+    border-color: transparent #9060c8; }
+  .helpbubble-purple.helpbubble-top-left:after, .helpbubble-purple.helpbubble-bottom-left:after {
+    border-color: #9060c8 transparent; }
+
 /*# sourceMappingURL=style.css.map */
