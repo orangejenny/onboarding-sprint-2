@@ -1,6 +1,7 @@
 <html>
     <head>
         <link type="text/css" rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -17,10 +18,10 @@
                             <ul data-bind="foreach: forms">
                                 <li data-bind="text: name"></li>
                             </ul>
-                            <button id="add-form" class="btn default-btn">Add Form</button>
+                            <button id="add-form" class="btn btn-default">Add Form</button>
                         </li>
                     </ul>
-                    <button id="add-menu" class="btn default-btn">Add Menu</button>
+                    <button id="add-menu" class="btn btn-default">Add Menu</button>
                 </div>
                 <div class="col-sm-4">
                     <div id="question-tree" data-bind="with: selectedForm">
@@ -29,22 +30,75 @@
                             <li data-bind="text: id"></li>
                         </ul>
                     </div>
-                    <button id="add-question" class="btn default-btn">Add Question</button>
+                    <button id="add-question" class="btn btn-default">Add Question</button>
                 </div>
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-12">
-                            QUESTION PROPERTIES
-                            <br>TODO: list question properties
-                            <br>TODO: app preview
+                            <div id="question-properties">
+                                TODO: markup for question properties
+                            </div>
+                            <div id="app-preview">
+                                TODO: markup for app preview
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            TODO: forms & cases tab setup
-                            <ul data-bind="foreach: cases">
-                                <li data-bind="text: name"></li>
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
+                                <!-- ko foreach: menus()[0].forms -->
+                                    <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + $index() }"></a></li>
+                                <!-- /ko -->
                             </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="cases">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <!-- ko foreach: caseSchema -->
+                                                    <th data-bind="text: $data"></th>
+                                                <!-- /ko -->
+                                            </tr>
+                                        </thead>
+                                        <tbody data-bind="foreach: cases">
+                                            <tr>
+                                                <td data-bind="text: name"></td>
+                                                <!-- ko foreach: $root.caseSchema -->
+                                                    <td data-bind="text: $parent.properties[$data]"></td>
+                                                <!-- /ko -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- ko foreach: menus()[0].forms -->
+                                    <div class="tab-pane" data-bind="attr: { id: 'form' + $index() }">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th data-bind="if: requiresCase">Case Name</th>
+                                                    <!-- ko foreach: questions -->
+                                                        <th data-bind="text: id"></th>
+                                                    <!-- /ko -->
+                                                </tr>
+                                            </thead>
+                                            <tbody data-bind="foreach: submissions">
+                                                <tr>
+                                                    <td data-bind="text: date"></td>
+                                                    <td data-bind="if: $parent.requiresCase">
+                                                        <span data-bind="text: caseName"></span>
+                                                    </td>
+                                                    <!-- ko foreach: $parent.questions -->
+                                                        <td data-bind="text: $parent.questions[id]"></td>
+                                                    <!-- /ko -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <!-- /ko -->
+                            </div>
                         </div>
                     </div>
                 </div>

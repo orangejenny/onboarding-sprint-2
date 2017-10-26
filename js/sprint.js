@@ -4,6 +4,10 @@ var SprintModel = function() {
     self.menus = ko.observableArray();
     self.cases = ko.observableArray();
 
+    self.caseSchema = ko.computed(function() {
+        return _.uniq(_.flatten(_.map(_.pluck(self.cases(), 'properties'), function(p) { return _.keys(p); })));
+    });
+
     self.selectedForm = ko.observable();
     self.selectedQuestion = ko.observable();    // for knowing what to display in question properties
     self.selectedCase = ko.observable();        // for previewing a form that requires a case
@@ -43,7 +47,7 @@ var SprintModel = function() {
                 ],
                 submissions: [
                     { date: "2017-10-21 12:31", caseName: 'Yury', questions: { color: 'pink' } },
-                    { date: "2017-10-21 12:31", caseName: 'Yury', questions: { color: 'red' } },
+                    { date: "2017-10-21 12:36", caseName: 'Yury', questions: { color: 'red' } },
                     { date: "2017-10-21 12:41", caseName: 'Brandon', questions: { color: 'orange' } },
                     { date: "2017-10-21 12:51", caseName: 'Amy', questions: { color: 'yellow' } },
                 ],
