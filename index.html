@@ -28,22 +28,25 @@
                 <div class="app-column menus-container">
 
                     <div class="area-container">
-                        <h4 class="area-header">Menus</h4>
-                        <div class="area-content">
-                            <ul data-bind="foreach: menus">
+                        <h4 class="area-header">Forms</h4>
+                        <div class="area-content area-content-nav">
+                            <ul class="nav nav-pills nav-stacked" data-bind="foreach: menus">
                                 <li>
                                     Forms
-                                    <ul data-bind="foreach: forms">
+                                    <ul class="nav nav-pills nav-stacked" data-bind="foreach: forms">
                                         <li style="cursor: pointer;" data-bind="text: name, click: function() {
                                         $root.selectedForm($data) }, css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }"></li>
                                     </ul>
-
-                                    <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">
-                                        <i class="fa fa-plus"></i> Add Form
-                                    </button>
+                                    <div class="nav-item">
+                                        <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">
+                                            <i class="fa fa-plus"></i> Add Form
+                                        </button>
+                                    </div>
                                 </li>
                             </ul>
-                            <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
+                            <div class="nav-item">
+                                <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
+                            </div>
                         </div>
                     </div>
 
@@ -52,14 +55,18 @@
 
                     <div id="question-tree" class="area-container">
                         <h4 class="area-header">Questions</h4>
-                        <div class="area-content">
-                            <button id="save-and-preview" class="btn btn-default">Save & Preview</button>
+                        <div class="area-content area-content-nav">
+                            <div class="nav-item">
+                                <button id="save-and-preview" class="btn btn-default">Save &amp; Preview</button>
+                            </div>
                             <div data-bind="with: selectedForm">
                                 <span data-bind="text: name"></span>
                                 <ul data-bind="foreach: questions">
                                     <li data-bind="text: id"></li>
                                 </ul>
-                                <button id="add-question" class="btn btn-default">Add Question</button>
+                                <div class="nav-item">
+                                    <button id="add-question" class="btn btn-default">Add Question</button>
+                                </div>
                             </div>
                         </div>
                     </div>
