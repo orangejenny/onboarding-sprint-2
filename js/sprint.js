@@ -5,11 +5,12 @@ var SprintModel = function() {
     self.cases = ko.observableArray();
 
     self.caseSchema = ko.computed(function() {
-        return _.uniq(_.flatten(_.map(_.pluck(self.cases(), 'properties'), function(p) { return _.keys(p); })));
+        return _.without(_.uniq(_.flatten(_.map(_.pluck(self.cases(), 'properties'), function(p) { return _.keys(p); }))), "name");
     });
 
     self.formCount = 0;                         // generate form IDs
     self.questionCount = 0;                     // generate question IDs
+
     self.selectedForm = ko.observable();
     self.selectedQuestion = ko.observable();    // for knowing what to display in question properties
     self.selectedCase = ko.observable();        // for previewing a form that requires a case
@@ -23,17 +24,13 @@ var SprintModel = function() {
                 { date: "2017-10-21 12:51", caseName: 'Amy', questions: { color: 'yellow' } },
             ]);
         }
-        return ko.observableArray([
-            /*{ date: "2017-10-11 11:31", questions: { name: 'Yury', age: 38 } },
-            { date: "2017-10-11 11:41", questions: { name: 'Brandon', age: 33 } },
-            { date: "2017-10-11 11:51", questions: { name: 'Amy', age: 37 } },*/
-        ]);
+        return ko.observableArray([]);
     };
 
-    self.addSubmission = function() {
+    self.submitForm = function(properties) {
         var form = self.selectedForm(),
             now = new Date();
-        var submission = {
+        var submission = _.defaults(properties || {}, {
             date: _.template("<%= year %>-<%= month %>-<%= day %> <%= hour %>:<%= minute %>:<%= second %>")({
                 year: now.getFullYear(),
                 month: now.getMonth() + 1,
@@ -43,13 +40,26 @@ var SprintModel = function() {
                 second: now.getSeconds(),
             }),
             questions: _.reduce($("#preview-form input"), function(memo, input) { memo[input.id] = input.value; return memo; }, {})
-        };
-        if (form.requiresCase) {
-            // TODO: set submission.caseName
-        }
+        });
+
         if (_.compact(_.values(submission.questions)).length !== _.keys(submission.questions).length) {
             alert("Please answer all questions");
             return;
+        }
+
+        if (form.requiresCase) {
+            // TODO: set submission.caseName
+        } else {
+            var properties = {};
+            _.each(self.selectedForm().questions, function(q) {
+                if (q.saveToCase) {
+                    properties[q.saveToCase] = submission.questions[q.id];
+                }
+            });
+            self.cases.push({
+                name: $("#preview-form input:first").val(),
+                properties: properties,
+            });
         }
         form.submissions.push(submission);
     };
@@ -65,6 +75,7 @@ var SprintModel = function() {
         form.questions.push(question);
         self.selectedForm(form);
         self.selectedQuestion(question);
+        // TODO: this doesn't update the table of form submissions' headers
     };
 
     self.selectedForm.subscribe(function(newValue) {
