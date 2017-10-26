@@ -1,6 +1,7 @@
 <html>
     <head>
         <link type="text/css" rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
@@ -9,11 +10,6 @@
         <link type="text/css"
               rel="stylesheet"
               media="all" href="css/style.css" />
-        <style>
-            .menus-container .active {
-                background-color: yellow;
-            }
-        </style>
     </head>
     <body>
         <div id="sprint" class="main-content">
@@ -28,30 +24,40 @@
             <div class="app-container clearfix">
                 <div class="app-column menus-container">
 
-                    <ul data-bind="foreach: menus">
-                        <li>
-                            Forms
-                            <ul data-bind="foreach: forms">
-                                <li style="cursor: pointer;" data-bind="text: name, click: function() {
-                                $root.selectedForm($data) }, css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }"></li>
+                    <div class="area-container">
+                        <h4 class="area-header">Menus</h4>
+                        <div class="area-content">
+                            <ul data-bind="foreach: menus">
+                                <li>
+                                    Forms
+                                    <ul data-bind="foreach: forms">
+                                        <li style="cursor: pointer;" data-bind="text: name, click: function() {
+                                        $root.selectedForm($data) }, css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }"></li>
+                                    </ul>
+
+                                    <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">
+                                        <i class="fa fa-plus"></i> Add Form
+                                    </button>
+                                </li>
                             </ul>
-                            <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">Add Form</button>
-                        </li>
-                    </ul>
-                    <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
+                            <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
+                        </div>
+                    </div>
 
                 </div><!-- / .menus-container -->
                 <div class="app-column questions-container">
 
-                    <div id="question-tree">
-                        <h4>Question Tree</h4>
-                        <button id="save-and-preview" class="btn btn-default">Save & Preview</button>
-                        <div data-bind="with: selectedForm">
-                            <span data-bind="text: name"></span>
-                            <ul data-bind="foreach: questions">
-                                <li data-bind="text: id"></li>
-                            </ul>
-                            <button id="add-question" class="btn btn-default">Add Question</button>
+                    <div id="question-tree" class="area-container">
+                        <h4 class="area-header">Questions</h4>
+                        <div class="area-content">
+                            <button id="save-and-preview" class="btn btn-default">Save & Preview</button>
+                            <div data-bind="with: selectedForm">
+                                <span data-bind="text: name"></span>
+                                <ul data-bind="foreach: questions">
+                                    <li data-bind="text: id"></li>
+                                </ul>
+                                <button id="add-question" class="btn btn-default">Add Question</button>
+                            </div>
                         </div>
                     </div>
 
@@ -59,9 +65,9 @@
                 <div class="app-column actions-container">
                     <div class="app-row active-form-area">
 
-                        <div id="question-properties">
-                            <h4>Question Properties (will toggle with app preview)</h4>
-                            <div data-bind="with: selectedQuestion">
+                        <div id="question-properties" class="area-container">
+                            <h4 class="area-header">Question Properties (will toggle with app preview)</h4>
+                            <div data-bind="with: selectedQuestion" class="area-content">
                                 <div class="form-horizontal">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Display Text</label>
@@ -88,9 +94,10 @@
                             </div>
                         </div><!-- / #question-properties -->
 
-                        <div id="app-preview">
-                            <h4>App Preview (will toggle with question properties, will show either case list or form preview)</h4>
-                            <div id="preview-case-list">
+                        <div id="app-preview" style="display: none;"
+                             class="area-container">
+                            <h4 class="area-header">App Preview (will toggle with question properties, will show either case list or form preview)</h4>
+                            <div id="preview-case-list" class="area-content">
                                 <h5>Case List</h5>
                                 <ul data-bind="foreach: cases">
                                     <li data-bind="text: name"></li>
@@ -102,8 +109,8 @@
                                     <div class="form-horizontal">
                                         <!-- ko foreach: questions -->
                                             <div class="form-group">
-                                                <label class="col-sm-4 control-label" data-bind="text: display"></label>
-                                                <div class="col-sm-8">
+                                                <label class="col-sm-2 control-label" data-bind="text: display"></label>
+                                                <div class="col-sm-10">
                                                     <input type="text" class="form-control" data-bind="attr: { id: id }">
                                                 </div>
                                             </div>
@@ -116,71 +123,74 @@
 
                     </div><!-- / .active-form-area -->
                     <div class="app-row preview-data-area">
+                        <div class="area-container">
+                            <h4 class="area-header">Data Preview</h4>
+                            <div class="area-content">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
+                                    <!-- ko foreach: allForms -->
+                                        <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + id }"></a></li>
+                                    <!-- /ko -->
+                                </ul>
+                                <div class="tab-content">
 
-                        <h4>Data Preview</h4>
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
-                            <!-- ko foreach: allForms -->
-                                <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + id }"></a></li>
-                            <!-- /ko -->
-                        </ul>
-                        <div class="tab-content">
+                                    <!-- Cases tab -->
+                                    <div class="tab-pane active" id="cases">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <!-- ko foreach: caseSchema -->
+                                                        <th data-bind="text: $data"></th>
+                                                    <!-- /ko -->
+                                                    <th>
+                                                        <button id="add-column" class="btn btn-default">+</button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody data-bind="foreach: cases">
+                                                <tr>
+                                                    <td data-bind="text: name"></td>
+                                                    <!-- ko foreach: $root.caseSchema -->
+                                                        <td data-bind="text: $parent.properties[$data]"></td>
+                                                    <!-- /ko -->
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!-- /Cases tab -->
 
-                            <!-- Cases tab -->
-                            <div class="tab-pane active" id="cases">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <!-- ko foreach: caseSchema -->
-                                                <th data-bind="text: $data"></th>
-                                            <!-- /ko -->
-                                            <th>
-                                                <button id="add-column" class="btn btn-default">+</button>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody data-bind="foreach: cases">
-                                        <tr>
-                                            <td data-bind="text: name"></td>
-                                            <!-- ko foreach: $root.caseSchema -->
-                                                <td data-bind="text: $parent.properties[$data]"></td>
-                                            <!-- /ko -->
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div><!-- /Cases tab -->
+                                    <!-- FORMS TABS -->
+                                    <!-- ko foreach: allForms -->
+                                        <div class="tab-pane" data-bind="attr: { id: 'form' + id }">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th data-bind="if: requiresCase">Case Name</th>
+                                                        <!-- ko foreach: questions -->
+                                                            <th data-bind="text: id"></th>
+                                                        <!-- /ko -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-bind="foreach: submissions">
+                                                    <tr>
+                                                        <td data-bind="text: date"></td>
+                                                        <td data-bind="if: $parent.requiresCase">
+                                                            <span data-bind="text: caseName"></span>
+                                                        </td>
+                                                        <!-- ko foreach: $parent.questions -->
+                                                            <td data-bind="text: $parent.questions[id]"></td>
+                                                        <!-- /ko -->
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    <!-- /ko -->
+                                    <!-- /FORMS TABS -->
 
-                            <!-- FORMS TABS -->
-                            <!-- ko foreach: allForms -->
-                                <div class="tab-pane" data-bind="attr: { id: 'form' + id }">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th data-bind="if: requiresCase">Case Name</th>
-                                                <!-- ko foreach: questions -->
-                                                    <th data-bind="text: id"></th>
-                                                <!-- /ko -->
-                                            </tr>
-                                        </thead>
-                                        <tbody data-bind="foreach: submissions">
-                                            <tr>
-                                                <td data-bind="text: date"></td>
-                                                <td data-bind="if: $parent.requiresCase">
-                                                    <span data-bind="text: caseName"></span>
-                                                </td>
-                                                <!-- ko foreach: $parent.questions -->
-                                                    <td data-bind="text: $parent.questions[id]"></td>
-                                                <!-- /ko -->
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            <!-- /ko -->
-                            <!-- /FORMS TABS -->
-
+                                </div><!-- .tab-content -->
+                            </div><!-- .area-content -->
                         </div>
                     </div><!-- /.preview-data-area -->
                     

@@ -1,16 +1,59 @@
 $navbar-height: 40px
 
+$cc-bg:     #f2f2f1
+$cc-text:   #181715
+
+$cc-neutral-hi:   #d6d6d4
+$cc-neutral-mid:  #685c53
+$cc-neutral-low:  #373534
+
+$cc-brand-hi:   #bcdeff
+$cc-brand-mid:  #004ebc
+$cc-brand-low:  #002c5f
+
+$cc-light-cool-accent-hi:   #ccf3f4
+$cc-light-cool-accent-mid:  #00bdc5
+$cc-light-cool-accent-low:  #00799a
+
+$cc-dark-warm-accent-hi:  #ffe3c2
+$cc-dark-warm-accent-mid: #ff8400
+$cc-dark-warm-accent-low: #994f00
+
+$cc-light-warm-accent-hi:   #f8ecbd
+$cc-light-warm-accent-mid:  #f9c700
+$cc-light-warm-accent-low:  #685300
+
+$cc-att-pos-hi:   #d5eaca
+$cc-att-pos-mid:  #47b700
+$cc-att-pos-low:  #216f00
+
+$cc-att-neg-hi:   #efcfcb
+$cc-att-neg-mid:  #e53e30
+$cc-att-neg-low:  #812627
+
+$cc-dark-cool-accent-hi:  #d6c5ea
+$cc-dark-cool-accent-mid: #9060c8
+$cc-dark-cool-accent-low: #5d3f82
+
+$color-white: #ffffff
+$color-border: darken($cc-bg, 10)
+
+$area-header-height: 30px
+
 .navbar
   min-height: $navbar-height
   height: $navbar-height
   margin-bottom: 0
+  background-color: $cc-brand-low
 
 .navbar-brand
-  padding-top: 5px
+  padding-top: 8px
   padding-bottom: 5px
   line-height: 25px
   font-size: 14px
   text-transform: uppercase
+  color: $color-white !important
+  font-weight: bold
 
 html, body, .main-content, .app-container
   height: 100%
@@ -31,13 +74,15 @@ html, body, .main-content, .app-container
   left: 0
 
 .questions-container
-  width: 30%
+  width: 20%
   left: 20%
+  border-left: 1px solid $color-border
 
 .actions-container
-  width: 50%
-  left: 50%
+  width: 60%
+  left: 40%
   overflow: hidden
+  border-left: 1px solid $color-border
 
 .app-row
   width: 100%
@@ -50,4 +95,28 @@ html, body, .main-content, .app-container
 .preview-data-area
   height: 50%
 
+.area-container
+  position: relative
+  padding-top: $area-header-height + 1px
 
+.area-header
+  position: absolute
+  width: 100%
+  top: 0
+  left: 0
+  margin: 0
+  padding: 0 20px
+  font-size: 14px
+  line-height: $area-header-height
+  background-color: $cc-bg
+  border-bottom: 1px solid $color-border
+  color: $cc-brand-low
+
+.area-content
+  background-color: $color-white
+  padding: 15px 20px
+  font-size: 12px
+
+
+.menus-container .active
+  background-color: $cc-light-warm-accent-mid
