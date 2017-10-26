@@ -31,14 +31,24 @@ var SprintModel = function() {
         return !self.previewing();
     });
     self.previewingCaseList = ko.computed(function() {
-        return self.previewing() && self.selectedForm().requiresCase && !self.selectedCase();
+        return self.previewing() && !self.previewingFeedback() && self.selectedForm().requiresCase && !self.selectedCase();
     });
     self.previewingForm = ko.computed(function() {
-        return self.previewing() && (!self.selectedForm().requiresCase || self.selectedCase());
+        return self.previewing() && !self.previewingFeedback() && (!self.selectedForm().requiresCase || self.selectedCase());
     });
+    self.previewingFeedback = ko.observable(false);
+    self.feedbackAction = ko.computed(function() {
+        if (self.selectedForm()) {
+            return self.selectedForm().requiresCase ? "Updated" : "Created";
+        }
+        return "";
+    });
+
     self.previewing.subscribe(function(newValue) {
+        self.previewingFeedback(false);
         if (!newValue) {
             self.selectedCase(null);
+            _.each($("#preview-form input"), function(input) { input.value = ""; });
         }
     });
 
@@ -59,7 +69,7 @@ var SprintModel = function() {
         var form = self.selectedForm(),
             now = new Date();
 
-        // Submit form
+        // Set up form submission
         var submission = _.defaults(properties || {}, {
             date: _.template("<%= year %>-<%= month %>-<%= day %> <%= hour %>:<%= minute %>:<%= second %>")({
                 year: now.getFullYear(),
@@ -77,7 +87,7 @@ var SprintModel = function() {
             return;
         }
 
-        // Create or update case
+        // Create or update case, and actually submit form
         var properties = {};
         _.each(self.selectedForm().questions, function(q) {
             if (q.saveToCase) {
@@ -96,6 +106,8 @@ var SprintModel = function() {
             });
         }
         form.submissions.push(submission);
+
+        self.previewingFeedback(true);
     };
 
     self.addQuestion = function(properties) {

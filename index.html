@@ -144,7 +144,7 @@
                                     <li data-bind="text: name, click: function() { $root.selectedCase($data.id) }"></li>
                                 </ul>
                             </div>
-                            <div id="preview-form" data-bind="visible: $root.previewingForm">
+                            <div id="preview-form" class="area-content" data-bind="visible: $root.previewingForm">
                                 <div data-bind="with: selectedForm">
                                     <h5 data-bind="text: name"></h5>
                                     <div class="form-horizontal">
@@ -158,6 +158,15 @@
                                         <!-- /ko -->
                                     </div>
                                     <button data-bind="click: function() { $root.submitForm() }" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                            <div id="preview-feedback" class="area-content" data-bind="visible: $root.previewingFeedback">
+                                <div class="alert alert-success">
+                                    Congratulations!
+                                    <br>
+                                    Submitted 1 form.
+                                    <br>
+                                    <span data-bind="text: feedbackAction"></span> 1 case.
                                 </div>
                             </div>
                         </div><!-- / #app-preview -->
