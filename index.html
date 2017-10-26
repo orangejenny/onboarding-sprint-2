@@ -14,6 +14,9 @@
         <div id="sprint" class="main-content">
             <nav class="navbar navbar-default navbar-static-top">
                 <div class="container-fluid">
+                    <button class="pull-right btn btn-danger btn-xs" data-bind="click: populate" style="margin: 5px;">
+                        Populate with sample data (remove for user testing)
+                    </button>
                     <a class="navbar-brand" href="#">My App</a>
                 </div>
             </nav>
@@ -55,7 +58,7 @@
                             <div data-bind="with: selectedQuestion">
                                 <div class="form-horizontal">
                                     <div class="form-group">
-                                        <label class="col-sm-4 control-label">display text</label>
+                                        <label class="col-sm-4 control-label">Display Text</label>
                                         <div class="col-sm-8">
                                             <input type="text" class="form-control" id="question-display" data-bind="value: display">
                                         </div>
@@ -111,8 +114,10 @@
                         <h4>Data Preview</h4>
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
+                            <!-- ko if: menus().length -->
                             <!-- ko foreach: menus()[0].forms -->
                                 <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + $index() }"></a></li>
+                            <!-- /ko -->
                             <!-- /ko -->
                         </ul>
                         <div class="tab-content">
@@ -144,6 +149,7 @@
                             </div><!-- /Cases tab -->
 
                             <!-- FORMS TABS -->
+                            <!-- ko if: menus().length -->
                             <!-- ko foreach: menus()[0].forms -->
                                 <div class="tab-pane" data-bind="attr: { id: 'form' + $index() }">
                                     <table class="table">
@@ -169,6 +175,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            <!-- /ko -->
                             <!-- /ko -->
                             <!-- /FORMS TABS -->
 
