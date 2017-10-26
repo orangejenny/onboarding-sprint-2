@@ -9,6 +9,11 @@
         <link type="text/css"
               rel="stylesheet"
               media="all" href="css/style.css" />
+        <style>
+            .menus-container .active {
+                background-color: yellow;
+            }
+        </style>
     </head>
     <body>
         <div id="sprint" class="main-content">
@@ -27,7 +32,8 @@
                         <li>
                             Forms
                             <ul data-bind="foreach: forms">
-                                <li data-bind="text: name"></li>
+                                <li style="cursor: pointer;" data-bind="text: name, click: function() {
+                                $root.selectedForm($data) }, css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }"></li>
                             </ul>
                             <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">Add Form</button>
                         </li>
@@ -115,7 +121,7 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
                             <!-- ko foreach: allForms -->
-                                <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + $index() }"></a></li>
+                                <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + id }"></a></li>
                             <!-- /ko -->
                         </ul>
                         <div class="tab-content">
@@ -148,7 +154,7 @@
 
                             <!-- FORMS TABS -->
                             <!-- ko foreach: allForms -->
-                                <div class="tab-pane" data-bind="attr: { id: 'form' + $index() }">
+                                <div class="tab-pane" data-bind="attr: { id: 'form' + id }">
                                     <table class="table">
                                         <thead>
                                             <tr>

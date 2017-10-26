@@ -8,6 +8,7 @@ var SprintModel = function() {
         return _.uniq(_.flatten(_.map(_.pluck(self.cases(), 'properties'), function(p) { return _.keys(p); })));
     });
 
+    self.formCount = 0;                         // generate form IDs
     self.selectedForm = ko.observable();
     self.selectedQuestion = ko.observable();    // for knowing what to display in question properties
     self.selectedCase = ko.observable();        // for previewing a form that requires a case
@@ -54,11 +55,13 @@ var SprintModel = function() {
 
     self.addForm = function(menuIndex, requiresCase) {
         self.menus()[menuIndex].forms.push({
+            id: self.formCount++,
             name: requiresCase ? "Followup Form" : "Registration Form",
             requiresCase: requiresCase,
             questions: _formQuestions(requiresCase),
             submissions: _formSubmissions(requiresCase),
         });
+        self.selectedForm(_.last(self.menus()[menuIndex].forms()));
     };
 
     self.addMenu = function() {
@@ -66,6 +69,7 @@ var SprintModel = function() {
         self.menus.push({ forms: ko.observableArray([]) });
         self.addForm(index, false);
         self.addForm(index, true);
+        self.selectedForm(_.first(self.menus()[index].forms()));
     };
 
     self.allForms = ko.computed(function() {
@@ -75,7 +79,6 @@ var SprintModel = function() {
     self.populate = function() {
         self.addMenu();
 
-        self.selectedForm(self.menus()[0].forms()[0]);
         self.selectedQuestion(self.selectedForm().questions[0]);
 
         self.cases.push({
