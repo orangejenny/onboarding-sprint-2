@@ -9,33 +9,10 @@ var SprintModel = function() {
     });
 
     self.formCount = 0;                         // generate form IDs
+    self.questionCount = 0;                     // generate question IDs
     self.selectedForm = ko.observable();
     self.selectedQuestion = ko.observable();    // for knowing what to display in question properties
     self.selectedCase = ko.observable();        // for previewing a form that requires a case
-
-    var _formQuestions = function(requiresCase) {
-        if (requiresCase) {
-            return [
-                {
-                    id: 'color',
-                    display: 'What is your favorite color?',
-                    saveToCase: 'favoriteColor',
-                },
-            ];
-        }
-        return [
-            {
-                id: 'name',
-                display: 'What is your name?',
-                saveToCase: 'name',
-            },
-            {
-                id: 'age',
-                display: 'What is your age?',
-                saveToCase: 'age',
-            },
-        ];
-    };
 
     var _formSubmissions = function(requiresCase) {
         if (requiresCase) {
@@ -53,15 +30,33 @@ var SprintModel = function() {
         ];
     };
 
+    self.addQuestion = function(properties) {
+        var form = self.selectedForm();
+        self.questionCount++;
+        var question = _.defaults(properties || {}, {
+            id: 'question' + self.questionCount,
+            display: '',
+            saveToCase: '',
+        });
+        form.questions.push(question);
+        self.selectedForm(form);
+        self.selectedQuestion(question);
+    };
+
+    self.selectedForm.subscribe(function(newValue) {
+        self.selectedQuestion(_.first(newValue.questions));
+    });
+
     self.addForm = function(menuIndex, requiresCase) {
-        self.menus()[menuIndex].forms.push({
-            id: self.formCount++,
+        var form = {
+            id: 'form' + self.formCount++,
             name: requiresCase ? "Followup Form" : "Registration Form",
             requiresCase: requiresCase,
-            questions: _formQuestions(requiresCase),
+            questions: [],
             submissions: _formSubmissions(requiresCase),
-        });
-        self.selectedForm(_.last(self.menus()[menuIndex].forms()));
+        };
+        self.menus()[menuIndex].forms.push(form);
+        self.selectedForm(form);
     };
 
     self.addMenu = function() {
@@ -79,7 +74,25 @@ var SprintModel = function() {
     self.populate = function() {
         self.addMenu();
 
-        self.selectedQuestion(self.selectedForm().questions[0]);
+        var menu = _.last(self.menus());
+        self.selectedForm(menu.forms()[0]);
+        self.addQuestion({
+            id: 'name',
+            display: 'What is your name?',
+            saveToCase: 'name',
+        });
+        self.addQuestion({
+            id: 'age',
+            display: 'What is your age?',
+            saveToCase: 'age',
+        });
+        self.selectedForm(menu.forms()[1]);
+        self.addQuestion({
+            id: 'color',
+            display: 'What is your favorite color?',
+            saveToCase: 'favoriteColor',
+        });
+        self.selectedForm(menu.forms()[0]);
 
         self.cases.push({
             name: 'Yury',

@@ -34,8 +34,11 @@
                                 <li>
                                     Forms
                                     <ul class="nav nav-pills nav-stacked" data-bind="foreach: forms">
-                                        <li style="cursor: pointer;" data-bind="text: name, click: function() {
-                                        $root.selectedForm($data) }, css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }"></li>
+                                        <li style="cursor: pointer;"
+                                            data-bind="text: name,
+                                                       click: function() { $root.selectedForm($data) },
+                                                       css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }"
+                                        ></li>
                                     </ul>
                                     <div class="nav-item">
                                         <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">
@@ -62,10 +65,16 @@
                             <div data-bind="with: selectedForm">
                                 <span data-bind="text: name"></span>
                                 <ul data-bind="foreach: questions">
-                                    <li data-bind="text: id"></li>
+                                    <li style="cursor: pointer;"
+                                        data-bind="text: id,
+                                                   click: function() { $root.selectedQuestion($data) },
+                                                   css: { active: $root.selectedQuestion() && $root.selectedQuestion().id == $data.id },
+                                                   "
+                                    ></li>
                                 </ul>
                                 <div class="nav-item">
-                                    <button id="add-question" class="btn btn-default">Add Question</button>
+                                    <button data-bind="click: function() { $root.addQuestion(); }"
+                                            class="btn btn-default">Add Question</button>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +148,7 @@
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
                                     <!-- ko foreach: allForms -->
-                                        <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + id }"></a></li>
+                                        <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#' + id }"></a></li>
                                     <!-- /ko -->
                                 </ul>
                                 <div class="tab-content">
@@ -172,7 +181,7 @@
 
                                     <!-- FORMS TABS -->
                                     <!-- ko foreach: allForms -->
-                                        <div class="tab-pane" data-bind="attr: { id: 'form' + id }">
+                                        <div class="tab-pane" data-bind="attr: { id: id }">
                                             <table class="table">
                                                 <thead>
                                                     <tr>
