@@ -58,6 +58,8 @@ var SprintModel = function() {
     self.submitForm = function(properties) {
         var form = self.selectedForm(),
             now = new Date();
+
+        // Submit form
         var submission = _.defaults(properties || {}, {
             date: _.template("<%= year %>-<%= month %>-<%= day %> <%= hour %>:<%= minute %>:<%= second %>")({
                 year: now.getFullYear(),
@@ -75,15 +77,18 @@ var SprintModel = function() {
             return;
         }
 
+        // Create or update case
+        var properties = {};
+        _.each(self.selectedForm().questions, function(q) {
+            if (q.saveToCase) {
+                properties[q.saveToCase] = submission.questions[q.id];
+            }
+        });
         if (form.requiresCase) {
-            // TODO: set submission.caseName
+            submission.caseName = self.selectedCaseName();
+            var caseObj = _.findWhere(self.cases(), {id: self.selectedCase()});
+            caseObj.properties = _.extend(caseObj.properties, properties);
         } else {
-            var properties = {};
-            _.each(self.selectedForm().questions, function(q) {
-                if (q.saveToCase) {
-                    properties[q.saveToCase] = submission.questions[q.id];
-                }
-            });
             self.cases.push({
                 id: ++self.caseCount,
                 name: properties.name || $("#preview-form input:first").val(),
@@ -166,17 +171,17 @@ var SprintModel = function() {
         self.cases.push({
             id: ++self.caseCount,
             name: 'Yury',
-            properties: {'age': 38, 'color': 'red'},
+            properties: {'age': 38, 'favoriteColor': 'red'},
         });
         self.cases.push({
             id: ++self.caseCount,
             name: 'Brandon',
-            properties: {'age': 33, 'color': 'orange'},
+            properties: {'age': 33, 'favoriteColor': 'orange'},
         });
         self.cases.push({
             id: ++self.caseCount,
             name: 'Amy',
-            properties: {'age': 37, 'color': 'yellow'},
+            properties: {'age': 37, 'favoriteColor': 'yellow'},
         });
     };
 };
