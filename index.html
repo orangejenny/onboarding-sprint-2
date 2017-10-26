@@ -6,12 +6,20 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="js/sprint.js"></script>
+        <link type="text/css"
+              rel="stylesheet"
+              media="all" href="css/style.css" />
     </head>
     <body>
-        <div id="sprint" class="container">
-            <div class="row">
-                <div class="col-sm-2">
-                    <h1>My App</h1>
+        <div id="sprint" class="main-content">
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">My App</a>
+                </div>
+            </nav>
+            <div class="app-container clearfix">
+                <div class="app-column menus-container">
+
                     <ul data-bind="foreach: menus">
                         <li>
                             Forms
@@ -22,8 +30,10 @@
                         </li>
                     </ul>
                     <button id="add-menu" class="btn btn-default">Add Menu</button>
-                </div>
-                <div class="col-sm-2">
+
+                </div><!-- / .menus-container -->
+                <div class="app-column questions-container">
+
                     <div id="question-tree">
                         <h4>Question Tree</h4>
                         <button id="save-and-preview" class="btn btn-default">Save & Preview</button>
@@ -35,128 +45,136 @@
                             <button id="add-question" class="btn btn-default">Add Question</button>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-8">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div id="question-properties">
-                                <h4>Question Properties (will toggle with app preview)</h4>
-                                <div data-bind="with: selectedQuestion">
+
+                </div><!-- / .questions-container -->
+                <div class="app-column actions-container">
+                    <div class="app-row active-form-area">
+
+                        <div id="question-properties">
+                            <h4>Question Properties (will toggle with app preview)</h4>
+                            <div data-bind="with: selectedQuestion">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">display text</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="question-display" data-bind="value: display">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">ID</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="question-id" data-bind="value: id">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Case</label>
+                                        <div class="col-sm-8">
+                                            <label>
+                                                <input type="checkbox" data-bind="checked: !!saveToCase"> Save to case as
+                                            </label>
+                                            <input type="text" class="form-control" id="question-saveToCase" data-bind="value: saveToCase">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- / #question-properties -->
+
+                        <div id="app-preview">
+                            <h4>App Preview (will toggle with question properties, will show either case list or form preview)</h4>
+                            <div id="preview-case-list">
+                                <h5>Case List</h5>
+                                <ul data-bind="foreach: cases">
+                                    <li data-bind="text: name"></li>
+                                </ul>
+                            </div>
+                            <div id="preview-form">
+                                <div data-bind="with: selectedForm">
+                                    <h5 data-bind="text: name"></h5>
                                     <div class="form-horizontal">
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">display text</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="question-display" data-bind="value: display">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">ID</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="question-id" data-bind="value: id">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">Case</label>
-                                            <div class="col-sm-8">
-                                                <label>
-                                                    <input type="checkbox" data-bind="checked: !!saveToCase"> Save to case as
-                                                </label>
-                                                <input type="text" class="form-control" id="question-saveToCase" data-bind="value: saveToCase">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="app-preview">
-                                <h4>App Preview (will toggle with question properties, will show either case list or form preview)</h4>
-                                <div id="preview-case-list">
-                                    <h5>Case List</h5>
-                                    <ul data-bind="foreach: cases">
-                                        <li data-bind="text: name"></li>
-                                    </ul>
-                                </div>
-                                <div id="preview-form">
-                                    <div data-bind="with: selectedForm">
-                                        <h5 data-bind="text: name"></h5>
-                                        <div class="form-horizontal">
-                                            <!-- ko foreach: questions -->
-                                                <div class="form-group">
-                                                    <label class="col-sm-4 control-label" data-bind="text: display"></label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" data-bind="attr: { id: id }">
-                                                    </div>
+                                        <!-- ko foreach: questions -->
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label" data-bind="text: display"></label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" data-bind="attr: { id: id }">
                                                 </div>
-                                            <!-- /ko -->
-                                        </div>
-                                        <button id="add-column" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        <!-- /ko -->
                                     </div>
+                                    <button id="add-column" class="btn btn-primary">Submit</button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h4>Data Preview</h4>
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
-                                <!-- ko foreach: menus()[0].forms -->
-                                    <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + $index() }"></a></li>
-                                <!-- /ko -->
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="cases">
+                        </div><!-- / #app-preview -->
+
+                    </div><!-- / .active-form-area -->
+                    <div class="app-row preview-data-area">
+
+                        <h4>Data Preview</h4>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
+                            <!-- ko foreach: menus()[0].forms -->
+                                <li><a href="#profile" data-toggle="tab" data-bind="text: name, attr: { href: '#form' + $index() }"></a></li>
+                            <!-- /ko -->
+                        </ul>
+                        <div class="tab-content">
+
+                            <!-- Cases tab -->
+                            <div class="tab-pane active" id="cases">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <!-- ko foreach: caseSchema -->
+                                                <th data-bind="text: $data"></th>
+                                            <!-- /ko -->
+                                            <th>
+                                                <button id="add-column" class="btn btn-default">+</button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody data-bind="foreach: cases">
+                                        <tr>
+                                            <td data-bind="text: name"></td>
+                                            <!-- ko foreach: $root.caseSchema -->
+                                                <td data-bind="text: $parent.properties[$data]"></td>
+                                            <!-- /ko -->
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div><!-- /Cases tab -->
+
+                            <!-- FORMS TABS -->
+                            <!-- ko foreach: menus()[0].forms -->
+                                <div class="tab-pane" data-bind="attr: { id: 'form' + $index() }">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <!-- ko foreach: caseSchema -->
-                                                    <th data-bind="text: $data"></th>
+                                                <th>Date</th>
+                                                <th data-bind="if: requiresCase">Case Name</th>
+                                                <!-- ko foreach: questions -->
+                                                    <th data-bind="text: id"></th>
                                                 <!-- /ko -->
-                                                <th>
-                                                    <button id="add-column" class="btn btn-default">+</button>
-                                                </th>
                                             </tr>
                                         </thead>
-                                        <tbody data-bind="foreach: cases">
+                                        <tbody data-bind="foreach: submissions">
                                             <tr>
-                                                <td data-bind="text: name"></td>
-                                                <!-- ko foreach: $root.caseSchema -->
-                                                    <td data-bind="text: $parent.properties[$data]"></td>
+                                                <td data-bind="text: date"></td>
+                                                <td data-bind="if: $parent.requiresCase">
+                                                    <span data-bind="text: caseName"></span>
+                                                </td>
+                                                <!-- ko foreach: $parent.questions -->
+                                                    <td data-bind="text: $parent.questions[id]"></td>
                                                 <!-- /ko -->
-                                                <td>&nbsp;</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <!-- ko foreach: menus()[0].forms -->
-                                    <div class="tab-pane" data-bind="attr: { id: 'form' + $index() }">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date</th>
-                                                    <th data-bind="if: requiresCase">Case Name</th>
-                                                    <!-- ko foreach: questions -->
-                                                        <th data-bind="text: id"></th>
-                                                    <!-- /ko -->
-                                                </tr>
-                                            </thead>
-                                            <tbody data-bind="foreach: submissions">
-                                                <tr>
-                                                    <td data-bind="text: date"></td>
-                                                    <td data-bind="if: $parent.requiresCase">
-                                                        <span data-bind="text: caseName"></span>
-                                                    </td>
-                                                    <!-- ko foreach: $parent.questions -->
-                                                        <td data-bind="text: $parent.questions[id]"></td>
-                                                    <!-- /ko -->
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                <!-- /ko -->
-                            </div>
+                            <!-- /ko -->
+                            <!-- /FORMS TABS -->
+
                         </div>
-                    </div>
+                    </div><!-- /.preview-data-area -->
+                    
                 </div>
             </div>
         </div>
