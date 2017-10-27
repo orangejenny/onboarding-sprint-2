@@ -264,11 +264,21 @@ var SprintModel = function() {
             display: 'What is your age?',
             saveToCase: 'age',
         });
+        self.addQuestion({
+            id: 'color',
+            display: 'What is your favorite color?',
+            saveToCase: 'favoriteColor',
+        });
         self.selectedForm(menu.forms()[1]);
         self.addQuestion({
             id: 'color',
             display: 'What is your favorite color?',
             saveToCase: 'favoriteColor',
+        });
+        self.addQuestion({
+            id: 'cityInForm',
+            display: 'Where shall we visit?',
+            saveToCase: 'cityInCase',
         });
         self.selectedForm(menu.forms()[0]);
     };
