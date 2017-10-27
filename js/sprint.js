@@ -97,9 +97,12 @@ var SprintModel = function() {
         return "";
     });
 
-    self.saveProperty = function() {
-        // TODO
-        alert("do stuff");
+    self.saveProperty = function(form, e) {
+        var id = $(e.currentTarget).closest(".modal").find("select").val(),
+            question = _.find(form.questions(), function(q) { return q.id() === id });
+        question.shouldSaveToCase(true);
+        question.saveToCase(id);
+        $("#add-property-modal").modal('hide');
     };
 
     self.submitForm = function(properties) {
