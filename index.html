@@ -12,6 +12,9 @@
               media="all" href="css/font-commcare.css" />
         <link type="text/css"
               rel="stylesheet"
+              media="all" href="css/font-workflow.css" />
+        <link type="text/css"
+              rel="stylesheet"
               media="all" href="css/style.css" />
         <script>
             $(function () {
@@ -40,25 +43,40 @@
                     <div class="area-container">
                         <h4 class="area-header">Menus</h4>
                         <div class="area-content area-content-nav">
-                            <ul class="nav nav-pills nav-stacked" data-bind="foreach: menus">
+                            <ul class="appnav-menu appnav-module" data-bind="foreach: menus">
                                 <li>
-                                    <a href="#" class="nav-menu no-click">Menu</a>
+                                    <div class="appnav-item">
+                                        <a href="#"
+                                           class="appnav-delete">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                        <a href="#"
+                                           class="appnav-title appnav-title-secondary no-click">
+                                            <i class="fa fa-bars appnav-primary-icon"></i>
+                                            <span>Menu</span>
+                                        </a>
+                                        <a href="#"
+                                           class="appnav-secondary"
+                                           data-bind="click: function() { $root.addForm($index(), true) }">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
                                     <ul class="nav nav-pills nav-stacked" data-bind="foreach: forms">
                                         <li data-bind="css: { active: $root.selectedForm() && $root.selectedForm().id == $data.id }">
                                             <a data-bind="text: name,
                                                           click: function() { $root.selectedForm($data) }"></a>
                                         </li>
                                     </ul>
-                                    <div class="nav-item">
-                                        <button data-bind="click: function() { $root.addForm($index(), true) }" class="btn btn-default">
-                                            <i class="fa fa-plus"></i> Add Form
-                                        </button>
+                                </li>
+                            </ul>
+                            <ul class="appnav-menu">
+                                <li class="sort-disabled">
+                                    <div class="appnav-item">
+                                        <a href="#" data-bind="click: addMenu" class="appnav-add">
+                                            <i class="new-module-icon fa fa-plus"></i> Add...</a>
                                     </div>
                                 </li>
                             </ul>
-                            <div class="nav-item">
-                                <button data-bind="click: addMenu" class="btn btn-default">Add Menu</button>
-                            </div>
                         </div>
                     </div>
 
@@ -69,7 +87,7 @@
                             <div class="col-sm-12">
                                 <div class="helpbubble helpbubble-primary helpbubble-left pull-left" style="max-width: 310px;">
                                     <p class="lead">
-                                        Please click <i class="fa fa-plus"></i> <strong>Add Menu...</strong> to start building your App!
+                                        Please click <i class="fa fa-plus"></i> <strong>Add...</strong> to start building your App!
                                     </p>
                                 </div>
                             </div>

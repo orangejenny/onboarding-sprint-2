@@ -1,0 +1,54 @@
+/* FONT PATH
+ * -------------------------- */
+@font-face {
+  font-family: 'WorkflowFontRegular';
+  src: url('font/workflowfont-regular.eot?v=1.1');
+  src: url('font/workflowfont-regular.eot?#iefix&v=1.1') format('embedded-opentype'), url('font/workflowfont-regular.woff?v=1.1') format('woff'), url('font/workflowfont-regular.ttf?v=1.1') format('truetype'), url('font/workflowfont-regular.svg?v=1.1#WorkflowFontRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.wf {
+  display: inline-block;
+  font-family: 'WorkflowFontRegular';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.wf-workflow-a:before {
+  content: "\f000";
+}
+.wf-workflow-b:before {
+  content: "\f001";
+}
+.wf-workflow-c:before {
+  content: "\f002";
+}
+.wf-update:before {
+  content: "\f003";
+}
+.wf-register:before {
+  content: "\f004";
+}
+.wf-complete:before {
+  content: "\f005";
+}
+.wf-arrownext:before {
+  content: "\f006";
+}
+.wf-recordlist-create:before {
+  content: "\f007";
+}
+.wf-recordlist-update:before {
+  content: "\f008";
+}
+.wf-recordlist-complete:before {
+  content: "\f009";
+}
+.wf-recordlist-branch:before {
+  content: "\f00a";
+}
+.wf-recordlist-branch-last:before {
+  content: "\f00b";
+}
