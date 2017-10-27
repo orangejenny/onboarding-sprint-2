@@ -6,11 +6,18 @@ var QuestionModel = function(options) {
     self.id = ko.observable(options.id);
     self.display = ko.observable(options.display);
     self.shouldSaveToCase = ko.observable(!!options.saveToCase);
-    self.saveToCase = ko.observable(options.saveToCase);
+    self.saveToCase = ko.observable(self.isCaseName ? "name" : options.saveToCase);
+};
 
-    self.saveToCaseValue = ko.computed(function() {
-        return self.isCaseName ? "name" : self.saveToCase();
-    });
+var FormModel = function(options) {
+    var self = this;
+
+    self.id = options.id;
+    self.name = options.name;
+    self.requiresCase = options.requiresCase;
+
+    self.questions = ko.observableArray([]);
+    self.submissions = ko.observableArray([]);
 };
 
 var SprintModel = function() {
@@ -56,6 +63,7 @@ var SprintModel = function() {
     self.previewing = ko.observable(false);
     self.previewingFeedback = ko.observable(false);
     self.restartPreview = function() {
+        self.selectedQuestion(null);
         self.previewing(true);
         self.previewingFeedback(false);
         self.selectedCase(null);
@@ -163,13 +171,11 @@ var SprintModel = function() {
 
     self.addForm = function(menuIndex, requiresCase) {
         var menuFormCount = self.menus()[menuIndex].forms().length;
-        var form = {
+        var form = new FormModel({
             id: 'form' + ++self.formCount,
             name: requiresCase ? "Followup Form" + (menuFormCount > 1 ? " " + menuFormCount : "") : "Registration Form",
             requiresCase: requiresCase,
-            questions: ko.observableArray([]),
-            submissions: ko.observableArray([]),
-        };
+        });
         self.menus()[menuIndex].forms.push(form);
         self.selectedForm(form);
     };
