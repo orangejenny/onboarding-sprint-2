@@ -5,7 +5,7 @@ var QuestionModel = function(options) {
 
     self.id = ko.observable(options.id);
     self.display = ko.observable(options.display);
-    self.shouldSaveToCase = ko.observable(!!options.saveToCase);
+    self.shouldSaveToCase = ko.observable(!!options.saveToCase || self.isCaseName);
     self.saveToCase = ko.observable(self.isCaseName ? "name" : options.saveToCase);
 
     self.displayWithFallback = ko.computed(function() {
