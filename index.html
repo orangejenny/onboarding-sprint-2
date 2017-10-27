@@ -319,8 +319,10 @@
                                             <tbody data-bind="foreach: cases">
                                                 <tr>
                                                     <td data-bind="text: name"></td>
-                                                    <!-- ko foreach: $root.caseSchema -->
-                                                        <td data-bind="text: $parent.properties[$data]"></td>
+                                                    <!-- ko foreach: propertyList -->
+                                                        <!-- ko if: $data !== 'name' -->
+                                                            <td data-bind="text: $parent.properties[$data]"></td>
+                                                        <!-- /ko -->
                                                     <!-- /ko -->
                                                     <td>&nbsp;</td>
                                                 </tr>

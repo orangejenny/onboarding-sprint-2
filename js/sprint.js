@@ -165,6 +165,7 @@ var SprintModel = function() {
                     caseObj.properties[key](value);
                 } else {
                     caseObj.properties[key] = ko.observable(value);
+                    caseObj.propertyList.push(key);
                 }
             });
             // Force cases to update in case where only new properties were
@@ -175,6 +176,7 @@ var SprintModel = function() {
                 id: ++self.caseCount,
                 name: newProperties.name || $("#preview-form input:first").val(),
                 properties: _.mapObject(newProperties, function(p) { return ko.observable(p); }),
+                propertyList: ko.observableArray(_.keys(newProperties)),
             });
         }
         form.submissions.push(submission);
