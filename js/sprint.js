@@ -7,6 +7,10 @@ var QuestionModel = function(options) {
     self.display = ko.observable(options.display);
     self.shouldSaveToCase = ko.observable(!!options.saveToCase);
     self.saveToCase = ko.observable(self.isCaseName ? "name" : options.saveToCase);
+
+    self.displayWithFallback = ko.computed(function() {
+        return self.display() || self.id();
+    });
 };
 
 var FormModel = function(options) {
@@ -18,6 +22,10 @@ var FormModel = function(options) {
 
     self.questions = ko.observableArray([]);
     self.submissions = ko.observableArray([]);
+
+    self.hasQuestionsToMap = ko.computed(function() {
+        return !!_.find(self.questions(), function(q) { return !q.shouldSaveToCase(); });
+    });
 };
 
 var SprintModel = function() {

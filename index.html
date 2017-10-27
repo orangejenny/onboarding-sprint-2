@@ -180,7 +180,7 @@
                                     <div class="form-horizontal">
                                         <!-- ko foreach: questions -->
                                             <div class="form-group">
-                                                <label class="col-sm-2 control-label" data-bind="text: display"></label>
+                                                <label class="col-sm-2 control-label" data-bind="text: displayWithFallback"></label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" data-bind="attr: { id: id }">
                                                 </div>
@@ -285,9 +285,19 @@
                             <h4 class="modal-title">Save Question to Case</h4>
                         </div>
                         <div class="modal-body">
-                            <select class="form-control" data-bind="foreach: questions">
-                                <option data-bind="text: display, attr: { value: id }"></option>
-                            </select>
+                            <!-- ko if: hasQuestionsToMap -->
+                                <select class="form-control" data-bind="foreach: questions">
+                                    <!-- ko ifnot: shouldSaveToCase -->
+                                        <option data-bind="text: displayWithFallback, attr: { value: id }"></option>
+                                    <!-- /ko -->
+                                </select>
+                            <!-- /ko -->
+                            <!-- ko ifnot: hasQuestionsToMap -->
+                                <div class="alert alert-info">
+                                    <i class="fa fa-question-circle"></i>
+                                    All of the questions in <strong><span data-bind="text: name"></span></strong> are already being saved to your case!
+                                </div>
+                            <!-- /ko -->
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.saveProperty">Save</button>
