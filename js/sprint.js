@@ -138,9 +138,10 @@ var SprintModel = function() {
     });
 
     self.addForm = function(menuIndex, requiresCase) {
+        var menuFormCount = self.menus()[menuIndex].forms().length;
         var form = {
             id: 'form' + ++self.formCount,
-            name: requiresCase ? "Followup Form" + (self.menus()[menuIndex].forms.length > 2 ?  self.menus()[menuIndex].forms.length - 1 : "") : "Registration Form",
+            name: requiresCase ? "Followup Form" + (menuFormCount > 1 ? " " + menuFormCount : "") : "Registration Form",
             requiresCase: requiresCase,
             questions: ko.observableArray([]),
             submissions: ko.observableArray([]),
