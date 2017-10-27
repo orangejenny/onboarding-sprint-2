@@ -369,6 +369,9 @@ html, body, .main-content, .app-container {
 .appnav-questions > li > .appnav-item.active {
   background-color: #9060c8; }
 
+.appnav-questions > li > .appnav-item a.appnav-title > span {
+  margin-left: 5px; }
+
 .appnav-questions {
   padding: 0; }
 
@@ -403,5 +406,14 @@ html, body, .main-content, .app-container {
 .preview-form-title {
   font-size: 18px;
   padding-bottom: 10px; }
+
+.table {
+  margin-top: 10px;
+  font-size: 12px; }
+  .table thead {
+    background-color: #f2f2f1; }
+    .table thead th {
+      line-height: 24px !important;
+      border-bottom: 1px solid #d9d9d7 !important; }
 
 /*# sourceMappingURL=style.css.map */

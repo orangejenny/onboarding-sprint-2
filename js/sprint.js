@@ -7,6 +7,13 @@ var QuestionModel = function(options) {
     self.display = ko.observable(options.display);
     self.shouldSaveToCase = ko.observable(!!options.saveToCase);
     self.saveToCase = ko.observable(self.isCaseName ? "name" : options.saveToCase);
+
+    self.displayWithFallback = ko.computed(function() {
+        return self.display() || self.id();
+    });
+    self.saveToCaseWithFallback = ko.computed(function() {
+        return self.saveToCase() || self.id();
+    });
 };
 
 var FormModel = function(options) {
@@ -18,6 +25,10 @@ var FormModel = function(options) {
 
     self.questions = ko.observableArray([]);
     self.submissions = ko.observableArray([]);
+
+    self.hasQuestionsToMap = ko.computed(function() {
+        return !!_.find(self.questions(), function(q) { return !q.shouldSaveToCase(); });
+    });
 };
 
 var SprintModel = function() {
@@ -31,7 +42,16 @@ var SprintModel = function() {
     self.cases = ko.observableArray();
 
     self.caseSchema = ko.computed(function() {
-        return _.without(_.uniq(_.flatten(_.map(_.pluck(self.cases(), 'properties'), function(p) { return _.keys(p); }))), "name");
+        return _.chain(self.menus())
+                .map(function(m) { return m.forms(); })                     // gather all forms in the app
+                .flatten()
+                .map(function(f) { return f.questions(); })                 // gather all questions
+                .flatten()
+                .filter(function(q) { return q.shouldSaveToCase(); })       // limit to questions that affect the case
+                .map(function(q) { return q.saveToCaseWithFallback(); })
+                .without("name")
+                .uniq()                                                     // get their distinct property names
+                .value();
     });
 
     self.caseCount = 0;                         // generate case IDs
@@ -77,9 +97,12 @@ var SprintModel = function() {
         return "";
     });
 
-    self.saveProperty = function() {
-        // TODO
-        alert("do stuff");
+    self.saveProperty = function(form, e) {
+        var id = $(e.currentTarget).closest(".modal").find("select").val(),
+            question = _.find(form.questions(), function(q) { return q.id() === id });
+        question.shouldSaveToCase(true);
+        question.saveToCase(id);
+        $("#add-property-modal").modal('hide');
     };
 
     self.submitForm = function(properties) {
@@ -108,7 +131,7 @@ var SprintModel = function() {
         var newProperties = {};
         _.each(self.selectedForm().questions(), function(q) {
             if (q.shouldSaveToCase()) {
-                newProperties[q.saveToCase() || q.id()] = submission.answers[q.id()];
+                newProperties[q.saveToCaseWithFallback()] = submission.answers[q.id()];
             }
         });
         if (form.requiresCase) {

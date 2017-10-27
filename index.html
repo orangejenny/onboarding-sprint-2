@@ -1,5 +1,6 @@
 <html>
     <head>
+        <title>My App</title>
         <link type="text/css" rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -28,7 +29,7 @@
         <div id="sprint" class="main-content">
             <nav class="navbar navbar-default navbar-static-top">
                 <div class="container-fluid">
-                    <button class="pull-right btn btn-warning btn-xs" data-bind="click: debug" style="margin: 5px;">
+                    <button class="hide pull-right btn btn-warning btn-xs" data-bind="click: debug" style="margin: 5px;">
                         Debug
                     </button>
                     <button class="pull-right btn btn-danger btn-xs" data-bind="click: addTemplateApp" style="margin: 5px;">
@@ -115,8 +116,12 @@
                             <span data-bind="text: name"></span>
                         </h4>
                         <div class="area-content area-content-nav">
+
                             <div class="questions-save" data-bind="css: {'questions-preview': $root.previewing}">
-                                <button data-bind="click: restartPreview" class="btn btn-success">Save &amp; Preview</button>
+                                <button data-bind="click: restartPreview" class="btn btn-success">
+                                    <i class="fa fa-play"></i>&nbsp;&nbsp;
+                                    Save &amp; Preview
+                                </button>
                             </div>
                             <div class="questions-header">
                                 Questions:
@@ -135,7 +140,7 @@
                                                class="appnav-title"
                                                data-bind="click: function() { $root.selectedQuestion($data) }">
                                                 <i class="fa fa-sticky-note-o"></i>
-                                                <span data-bind="text: id"></span>
+                                                <span data-bind="text: displayWithFallback"></span>
                                             </a>
 
                                         </div>
@@ -201,16 +206,24 @@
                              class="area-container"
                              data-bind="visible: $root.previewing">
                             <h4 class="area-header">
+                                <i class="fa fa-mobile"></i>
                                 Form Preview
                                 <!-- ko if: selectedCase -->
                                 &gt; <span data-bind="text: selectedCase().name"></span>
                                 <!-- /ko -->
                             </h4>
                             <div id="preview-case-list" class="area-content" data-bind="visible: $root.previewingCaseList">
-                                <h5>Case List</h5>
-                                <ul data-bind="foreach: cases">
-                                    <li data-bind="text: name, click: function() { $root.selectedCase($data) }"></li>
+                                <h5>Select a Case</h5>
+                                <ul class="list-group" data-bind="foreach: cases">
+                                    <button class="list-group-item" data-bind="text: name, click: function() { $root.selectedCase($data) }"></button>
                                 </ul>
+                                <!-- ko ifnot: cases().length -->
+                                    <div class="alert alert-info">
+                                        <i class="fa fa-exclamation-circle"></i>
+                                        You don't have any cases yet!
+                                        <br>Try using a registration form to create one.
+                                    </div>
+                                <!-- /ko -->
                             </div>
                             <div id="preview-form" class="area-content" data-bind="visible: $root.previewingForm">
                                 <div data-bind="with: selectedForm">
@@ -222,23 +235,32 @@
                                     <div class="form">
                                         <!-- ko foreach: questions -->
                                             <div class="form-group">
-                                                <label class="control-label question-display-text" data-bind="text: display"></label>
+                                                <label class="control-label question-display-text" data-bind="text: displayWithFallback"></label>
                                                 <div>
                                                     <input type="text" class="form-control" data-bind="attr: { id: id }">
                                                 </div>
                                             </div>
                                         <!-- /ko -->
                                     </div>
-                                    <button data-bind="click: function() { $root.submitForm() }" class="btn btn-primary">Submit</button>
+                                    <!-- ko ifnot: questions().length -->
+                                        <div class="alert alert-info">
+                                            <i class="fa fa-exclamation-circle"></i>
+                                            Your form doesn't have any questions yet!
+                                        </div>
+                                    <!-- /ko -->
+                                    <!-- ko if: questions().length -->
+                                        <button data-bind="click: function() { $root.submitForm() }" class="btn btn-primary">Submit</button>
+                                    <!-- /ko -->
                                 </div>
                             </div>
                             <div id="preview-feedback" class="area-content" data-bind="visible: $root.previewingFeedback">
                                 <div class="alert alert-success">
-                                    Congratulations!
-                                    <br><br>
+                                    <p class="lead">Congratulations!</p>
+                                    <p>
                                     You <span data-bind="text: feedbackAction"></span> 1 case.
                                     <br>
                                     You also submitted 1 form.
+                                    </p>
                                 </div>
                             </div>
                         </div><!-- / #app-preview -->
@@ -246,7 +268,10 @@
                     </div><!-- / .active-form-area -->
                     <div class="app-row preview-data-area">
                         <div class="area-container">
-                            <h4 class="area-header">Data Preview</h4>
+                            <h4 class="area-header">
+                                <i class="fa fa-bar-chart"></i>
+                                Data Preview
+                            </h4>
                             <div class="area-content">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#cases" data-toggle="tab">Cases</a></li>
@@ -266,7 +291,9 @@
                                                         <th data-bind="text: $data"></th>
                                                     <!-- /ko -->
                                                     <th>
-                                                        <button id="add-column" class="btn btn-default" data-toggle="modal" data-target="#add-property-modal">+</button>
+                                                        <button id="add-column" class="btn btn-default btn-sm" data-toggle="modal" data-target="#add-property-modal">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -280,12 +307,20 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <!-- ko ifnot: cases().length -->
+                                            <div class="alert alert-info">
+                                                <p class="lead">
+                                                    <i class="fa fa-exclamation-circle"></i>
+                                                    You don't have any cases yet!
+                                                </p>
+                                            </div>
+                                        <!-- /ko -->
                                     </div><!-- /Cases tab -->
 
                                     <!-- FORMS TABS -->
                                     <!-- ko foreach: allForms -->
                                         <div class="tab-pane" data-bind="attr: { id: id }">
-                                            <table class="table">
+                                            <table class="table table-striped">
                                                 <thead>
                                                     <tr>
                                                         <th>Date</th>
@@ -307,6 +342,14 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <!-- ko ifnot: submissions().length -->
+                                                <div class="alert alert-info">
+                                                    <p class="lead">
+                                                        <i class="fa fa-exclamation-circle"></i>
+                                                        You haven't submitted a <strong><span data-bind="text: name"></span></strong> yet!
+                                                    </p>
+                                                </div>
+                                            <!-- /ko -->
                                         </div>
                                     <!-- /ko -->
                                     <!-- /FORMS TABS -->
@@ -327,13 +370,25 @@
                             <h4 class="modal-title">Save Question to Case</h4>
                         </div>
                         <div class="modal-body">
-                            <select class="form-control" data-bind="foreach: questions">
-                                <option data-bind="text: display, attr: { value: id }"></option>
-                            </select>
+                            <!-- ko if: hasQuestionsToMap -->
+                                <select class="form-control" data-bind="foreach: questions">
+                                    <!-- ko ifnot: shouldSaveToCase -->
+                                        <option data-bind="text: displayWithFallback, attr: { value: id }"></option>
+                                    <!-- /ko -->
+                                </select>
+                            <!-- /ko -->
+                            <!-- ko ifnot: hasQuestionsToMap -->
+                                <div class="alert alert-info">
+                                    <i class="fa fa-question-circle"></i>
+                                    All of the questions in <strong><span data-bind="text: name"></span></strong> are already being saved to your case!
+                                </div>
+                            <!-- /ko -->
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.saveProperty">Save</button>
-                        </div>
+                        <!-- ko if: hasQuestionsToMap -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.saveProperty">Save</button>
+                            </div>
+                        <!-- /ko -->
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
