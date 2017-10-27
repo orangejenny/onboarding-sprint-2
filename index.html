@@ -165,13 +165,13 @@
                             <h4 class="area-header">
                                 Form Preview
                                 <!-- ko if: selectedCase -->
-                                &gt; <span data-bind="text: selectedCaseName"></span>
+                                &gt; <span data-bind="text: selectedCase().name"></span>
                                 <!-- /ko -->
                             </h4>
                             <div id="preview-case-list" class="area-content" data-bind="visible: $root.previewingCaseList">
                                 <h5>Case List</h5>
                                 <ul data-bind="foreach: cases">
-                                    <li data-bind="text: name, click: function() { $root.selectedCase($data.id) }"></li>
+                                    <li data-bind="text: name, click: function() { $root.selectedCase($data) }"></li>
                                 </ul>
                             </div>
                             <div id="preview-form" class="area-content" data-bind="visible: $root.previewingForm">

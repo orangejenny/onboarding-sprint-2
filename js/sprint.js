@@ -38,7 +38,8 @@ var SprintModel = function() {
     self.formCount = 0;                         // generate form IDs
     self.questionCount = 0;                     // generate question IDs
 
-    self.selectedForm = ko.observable();
+    // All of these are either a full object or null
+    self.selectedForm = ko.observable();        // sets context for question tree & form preview
     self.selectedQuestion = ko.observable();    // for knowing what to display in question properties
     self.selectedCase = ko.observable();        // for previewing a form that requires a case
 
@@ -48,16 +49,6 @@ var SprintModel = function() {
             return self.selectedForm().questions;
         }
         return [];
-    });
-
-    self.selectedCaseName = ko.computed(function() {
-        if (self.selectedCase()) {
-            var selected = _.findWhere(self.cases(), {id: self.selectedCase()})
-            if (selected) {
-                return selected.name;
-            }
-        }
-        return "";
     });
 
     self.previewing = ko.observable(false);
@@ -121,8 +112,8 @@ var SprintModel = function() {
             }
         });
         if (form.requiresCase) {
-            submission.caseName = self.selectedCaseName();
-            var caseObj = _.findWhere(self.cases(), {id: self.selectedCase()});
+            submission.caseName = self.selectedCase().name;
+            var caseObj = self.selectedCase();
             _.each(newProperties, function(value, key) {
                 if (caseObj.properties[key]) {
                     caseObj.properties[key](value);
