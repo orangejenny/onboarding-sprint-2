@@ -1,3 +1,18 @@
+var QuestionModel = function(options) {
+    var self = this;
+
+    self.isCaseName = options.isCaseName;
+
+    self.id = ko.observable(options.id);
+    self.display = ko.observable(options.display);
+    self.shouldSaveToCase = ko.observable(!!options.saveToCase);
+    self.saveToCase = ko.observable(options.saveToCase);
+
+    self.saveToCaseValue = ko.computed(function() {
+        return self.isCaseName ? "name" : self.saveToCase();
+    });
+};
+
 var SprintModel = function() {
     var self = this;
 
@@ -93,8 +108,8 @@ var SprintModel = function() {
         // Create or update case, and actually submit form
         var newProperties = {};
         _.each(self.selectedForm().questions(), function(q) {
-            if (q.saveToCase()) {
-                newProperties[q.saveToCase()] = submission.answers[q.id()];
+            if (q.shouldSaveToCase()) {
+                newProperties[q.saveToCase() || q.id()] = submission.answers[q.id()];
             }
         });
         if (form.requiresCase) {
@@ -126,11 +141,12 @@ var SprintModel = function() {
         var form = self.selectedForm();
         self.questionCount++;
         properties = properties || {};
-        var question = {
-            id: ko.observable(properties.id || 'question' + self.questionCount),
-            display: ko.observable(properties.display || ''),
-            saveToCase: ko.observable(properties.saveToCase || ''),
-        };
+        var question = new QuestionModel({
+            isCaseName: !form.requiresCase && !form.questions().length,
+            id: properties.id || 'question' + self.questionCount,
+            display: properties.display || '',
+            saveToCase: properties.saveToCase || '',
+        });
         form.questions.push(question);
         self.selectedForm(form);
         self.selectedQuestion(question);

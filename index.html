@@ -142,9 +142,16 @@
                                         <div class="col-sm-8">
                                             <div class="form-inline">
                                                 <label>
-                                                    <input type="checkbox" data-bind="checked: saveToCase"> Save to case as
+                                                    <input type="checkbox" data-bind="checked: shouldSaveToCase, attr: { disabled: isCaseName }"> Save to case as
                                                 </label>
-                                                <input type="text" class="form-control" data-bind="value: saveToCase, attr: { placeholder: id }">
+                                                <input type="text" class="form-control" data-bind="value: saveToCaseValue, attr: { placeholder: id, disabled: isCaseName }">
+                                                <!-- ko if: isCaseName -->
+                                                    <div class="text-muted" style="margin: 5px 0;">
+                                                        <i class="fa fa-question-circle"></i> This is a registration
+                                                        form, which creates a case.<br>The first question in this form
+                                                        must be the case's name.
+                                                    </div>
+                                                <!-- /ko -->
                                             </div>
                                         </div>
                                     </div>
