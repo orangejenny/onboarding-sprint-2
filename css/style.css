@@ -2,8 +2,7 @@
 .navbar {
   min-height: 40px;
   height: 40px;
-  margin-bottom: 0;
-  background-color: #002c5f; }
+  margin-bottom: 0; }
 
 .navbar-brand {
   padding-top: 8px;
@@ -11,7 +10,6 @@
   line-height: 25px;
   font-size: 14px;
   text-transform: uppercase;
-  color: #ffffff !important;
   font-weight: bold; }
 
 html, body, .main-content, .app-container {
@@ -30,12 +28,12 @@ html, body, .main-content, .app-container {
 .menus-container {
   width: 20%;
   left: 0;
-  border-right: 1px solid #d9d9d7; }
+  background-color: #f2f2f1; }
 
 .questions-container {
   width: 20%;
   left: 20%;
-  border-right: 1px solid #d9d9d7; }
+  background-color: #f2f2f1; }
 
 .actions-container {
   width: 60%;
@@ -71,14 +69,27 @@ html, body, .main-content, .app-container {
   padding: 0 20px;
   font-size: 14px;
   line-height: 30px;
-  background-color: #f2f2f1;
-  border-bottom: 1px solid #d9d9d7;
-  color: #002c5f;
+  background-color: #004ebc;
+  border-bottom: 1px solid #002c5f;
+  color: #ffffff;
   z-index: 10; }
 
+.questions-container .area-header {
+  background-color: #002c5f; }
+
+#question-properties .area-header {
+  background-color: #9060c8; }
+
+#app-preview .area-header {
+  background-color: #00799a;
+  border-bottom: 1px solid #00799a; }
+
+.preview-data-area .area-header {
+  background-color: #00799a; }
+
 .area-content {
-  background-color: #ffffff;
   padding: 40px 15px 20px;
+  border-right: 1px solid #d9d9d7;
   font-size: 12px;
   height: 100%;
   overflow-x: hidden;
@@ -183,8 +194,8 @@ html, body, .main-content, .app-container {
   line-height: 30px;
   padding-right: 32px;
   color: #181715;
-  transition: all 0.5s;
-  text-decoration: none !important; }
+  text-decoration: none !important;
+  cursor: pointer; }
 
 .appnav-primary-icon {
   font-size: 1.7rem;
@@ -355,5 +366,42 @@ html, body, .main-content, .app-container {
         color: #56acff;
         text-shadow: 0 0 10px #000; }
 
-.questions-container .active {
-  background-color: #f9c700; }
+.appnav-questions > li > .appnav-item.active {
+  background-color: #9060c8; }
+
+.appnav-questions {
+  padding: 0; }
+
+.questions-header {
+  padding: 5px 20px;
+  font-weight: bold; }
+
+.questions-save {
+  padding: 5px 20px;
+  background-color: #f2f2f1;
+  text-align: center;
+  border-bottom: 1px solid #d9d9d7; }
+
+.btn {
+  text-transform: uppercase;
+  font-size: 12px; }
+
+.form-control {
+  font-size: 12px; }
+
+.questions-preview {
+  padding: 6px 20px;
+  background-color: #00799a; }
+  .questions-preview .btn {
+    outline: none;
+    background-color: transparent;
+    border: none !important; }
+
+.question-display-text {
+  font-size: 14px; }
+
+.preview-form-title {
+  font-size: 18px;
+  padding-bottom: 10px; }
+
+/*# sourceMappingURL=style.css.map */

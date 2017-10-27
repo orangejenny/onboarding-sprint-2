@@ -50,12 +50,10 @@ $appnav-trash-width: 32px
 $appnav-item-height: 30px
 $appnav-secondary-width: 35px
 
-
 .navbar
   min-height: $navbar-height
   height: $navbar-height
   margin-bottom: 0
-  background-color: $cc-brand-low
 
 .navbar-brand
   padding-top: 8px
@@ -63,7 +61,6 @@ $appnav-secondary-width: 35px
   line-height: 25px
   font-size: $font-size-base
   text-transform: uppercase
-  color: $color-white !important
   font-weight: bold
 
 html, body, .main-content, .app-container
@@ -82,12 +79,12 @@ html, body, .main-content, .app-container
 .menus-container
   width: 20%
   left: 0
-  border-right: 1px solid $color-border
+  background-color: $cc-bg
 
 .questions-container
   width: 20%
   left: 20%
-  border-right: 1px solid $color-border
+  background-color: $cc-bg
 
 .actions-container
   width: 60%
@@ -123,14 +120,27 @@ html, body, .main-content, .app-container
   padding: 0 20px
   font-size: 14px
   line-height: $area-header-height
-  background-color: $cc-bg
-  border-bottom: 1px solid $color-border
-  color: $cc-brand-low
+  background-color: $cc-brand-mid
+  border-bottom: 1px solid $cc-brand-low
+  color: $color-white
   z-index: 10
 
+.questions-container .area-header
+  background-color: $cc-brand-low
+
+#question-properties .area-header
+  background-color: $cc-dark-cool-accent-mid
+
+#app-preview .area-header
+  background-color: $cc-light-cool-accent-low
+  border-bottom: 1px solid $cc-light-cool-accent-low
+
+.preview-data-area .area-header
+  background-color: $cc-light-cool-accent-low
+
 .area-content
-  background-color: $color-white
   padding: $area-header-height+10px 15px 20px
+  border-right: 1px solid $color-border
   font-size: 12px
   height: 100%
   overflow-x: hidden
@@ -243,8 +253,8 @@ html, body, .main-content, .app-container
   line-height: $appnav-item-height
   padding-right: $appnav-trash-width
   color: $cc-text
-  transition: all .5s
   text-decoration: none !important
+  cursor: pointer
 
 .appnav-primary-icon
   font-size: 1.7rem
@@ -419,5 +429,40 @@ html, body, .main-content, .app-container
         color: darken($cc-brand-hi, 20)
         text-shadow: 0 0 10px #000
 
-.questions-container .active
-  background-color: $cc-light-warm-accent-mid
+.appnav-questions > li > .appnav-item.active
+  background-color: $cc-dark-cool-accent-mid
+
+.appnav-questions
+  padding: 0
+
+.questions-header
+  padding: 5px 20px
+  font-weight: bold
+
+.questions-save
+  padding: 5px 20px
+  background-color: $cc-bg
+  text-align: center
+  border-bottom: 1px solid $color-border
+
+.btn
+  text-transform: uppercase
+  font-size: 12px
+
+.form-control
+  font-size: 12px
+
+.questions-preview
+  padding: 6px 20px
+  background-color: $cc-light-cool-accent-low
+  .btn
+    outline: none
+    background-color: transparent
+    border: none !important
+
+.question-display-text
+  font-size: 14px
+
+.preview-form-title
+  font-size: 18px
+  padding-bottom: 10px
