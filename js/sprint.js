@@ -27,7 +27,7 @@ var FormModel = function(options) {
     self.submissions = ko.observableArray([]);
 
     self.hasQuestionsToMap = ko.computed(function() {
-        return !!_.find(self.questions(), function(q) { return !q.shouldSaveToCase(); });
+        return !!_.find(self.questions(), function(q) { return !q.shouldSaveToCase() && !q.isCaseName; });    // TODO: DRY up with ko if statements in modal's html
     });
 };
 

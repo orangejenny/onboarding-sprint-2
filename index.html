@@ -383,14 +383,21 @@
                             <!-- ko if: hasQuestionsToMap -->
                                 <select class="form-control" data-bind="foreach: questions">
                                     <!-- ko ifnot: shouldSaveToCase -->
-                                        <option data-bind="text: displayWithFallback, attr: { value: id }"></option>
+                                        <!-- ko ifnot: isCaseName -->
+                                            <option data-bind="text: displayWithFallback, attr: { value: id }"></option>
+                                        <!-- /ko -->
                                     <!-- /ko -->
                                 </select>
                             <!-- /ko -->
                             <!-- ko ifnot: hasQuestionsToMap -->
                                 <div class="alert alert-info">
                                     <i class="fa fa-question-circle"></i>
-                                    All of the questions in <strong><span data-bind="text: name"></span></strong> are already being saved to your case!
+                                    <!-- ko if: questions().length -->
+                                        All of the questions in <strong><span data-bind="text: name"></span></strong> are already being saved to your case!
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: questions().length -->
+                                        <strong><span data-bind="text: name"></span></strong> doesn't have any questions yet!
+                                    <!-- /ko -->
                                 </div>
                             <!-- /ko -->
                         </div>
