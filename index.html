@@ -109,7 +109,7 @@
                             <div data-bind="with: selectedForm">
                                 <ul data-bind="foreach: questions">
                                     <li data-bind="css: { active: $root.selectedQuestion() && $root.selectedQuestion().id == $data.id }">
-                                        <a data-bind="text: id,
+                                        <a data-bind="text: displayWithFallback,
                                                       click: function() { $root.selectedQuestion($data) }"></a>
                                     </li>
                                 </ul>
