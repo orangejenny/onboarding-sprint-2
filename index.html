@@ -185,7 +185,13 @@
                                         <div class="col-sm-9">
                                             <div class="form-inline">
                                                 <label>
-                                                    <input type="checkbox" data-bind="checked: shouldSaveToCase, attr: { disabled: isCaseName }"> Save to case as
+                                                    <input type="checkbox" data-bind="checked: shouldSaveToCase, attr: { disabled: isCaseName }">
+                                                    <!-- ko if: $root.selectedForm().requiresCase -->
+                                                        Add new or update existing field that has been created by registration form
+                                                    <!-- /ko -->
+                                                    <!-- ko ifnot: $root.selectedForm().requiresCase -->
+                                                        Add field to the case created by this registration form
+                                                    <!-- /ko -->
                                                 </label>
                                                 <input type="text" class="form-control" data-bind="value: saveToCase, attr: { placeholder: id, disabled: isCaseName }">
                                                 <!-- ko if: isCaseName -->
