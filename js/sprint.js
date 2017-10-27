@@ -92,21 +92,30 @@ var SprintModel = function() {
         }
 
         // Create or update case, and actually submit form
-        var properties = {};
+        var newProperties = {};
         _.each(self.selectedForm().questions(), function(q) {
             if (q.saveToCase()) {
-                properties[q.saveToCase()] = submission.answers[q.id()];
+                newProperties[q.saveToCase()] = submission.answers[q.id()];
             }
         });
         if (form.requiresCase) {
             submission.caseName = self.selectedCaseName();
             var caseObj = _.findWhere(self.cases(), {id: self.selectedCase()});
-            caseObj.properties = _.extend(caseObj.properties, properties);
+            _.each(newProperties, function(value, key) {
+                if (caseObj.properties[key]) {
+                    caseObj.properties[key](value);
+                } else {
+                    caseObj.properties[key] = ko.observable(value);
+                }
+            });
+            // Force cases to update in case where only new properties were
+            // added (and therefore no observables were updated)
+            self.cases.valueHasMutated();
         } else {
             self.cases.push({
                 id: ++self.caseCount,
-                name: properties.name || $("#preview-form input:first").val(),
-                properties: properties,
+                name: newProperties.name || $("#preview-form input:first").val(),
+                properties: _.mapObject(newProperties, function(p) { return ko.observable(p); }),
             });
         }
         form.submissions.push(submission);
