@@ -101,6 +101,7 @@ var SprintModel = function() {
         self.previewing(true);
         self.previewingFeedback(false);
         self.selectedCase(null);
+
         _.each($("#preview-form input"), function(input) { input.value = ""; });
     };
 
@@ -165,7 +166,8 @@ var SprintModel = function() {
                     caseObj.properties[key](value);
                 } else {
                     caseObj.properties[key] = ko.observable(value);
-                    caseObj.propertyList.push(key);
+                    caseObj.propertyList.push(key); // TODO: propertyList is redundant, can it be avoided?
+                                                    // without it, the cases table doesn't update
                 }
             });
             // Force cases to update in case where only new properties were
