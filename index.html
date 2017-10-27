@@ -266,29 +266,30 @@
                             </div><!-- .area-content -->
                         </div>
                     </div><!-- /.preview-data-area -->
-                    
+
                 </div>
             </div>
-        </div>
 
-        <div class="modal fade" tabindex="-1" id="add-property-modal" data-bind="with: selectedForm">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Save Question to Case</h4>
-                    </div>
-                    <div class="modal-body">
-                        <select class="form-control" data-bind="foreach: questions">
-                            <option data-bind="text: name, attr: { value: id }"></option>
-                        </select>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: saveProperty">Save</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+            <div class="modal fade" tabindex="-1" id="add-property-modal" data-bind="with: $root.selectedForm">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Save Question to Case</h4>
+                        </div>
+                        <div class="modal-body">
+                            <select class="form-control" data-bind="foreach: questions">
+                                <option data-bind="text: display, attr: { value: id }"></option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.saveProperty">Save</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+        </div>
 
     </body>
 </html>
