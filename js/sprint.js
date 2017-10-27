@@ -39,6 +39,14 @@ var SprintModel = function() {
     });
 
     self.previewing = ko.observable(false);
+    self.previewingFeedback = ko.observable(false);
+    self.restartPreview = function() {
+        self.previewing(true);
+        self.previewingFeedback(false);
+        self.selectedCase(null);
+        _.each($("#preview-form input"), function(input) { input.value = ""; });
+    };
+
     self.showQuestionProperties = ko.computed(function() {
         return !self.previewing() && self.selectedQuestion();
     });
@@ -48,20 +56,11 @@ var SprintModel = function() {
     self.previewingForm = ko.computed(function() {
         return self.previewing() && !self.previewingFeedback() && (!self.selectedForm().requiresCase || self.selectedCase());
     });
-    self.previewingFeedback = ko.observable(false);
     self.feedbackAction = ko.computed(function() {
         if (self.selectedForm()) {
-            return self.selectedForm().requiresCase ? "Updated" : "Created";
+            return self.selectedForm().requiresCase ? "updated" : "created";
         }
         return "";
-    });
-
-    self.previewing.subscribe(function(newValue) {
-        self.previewingFeedback(false);
-        if (!newValue) {
-            self.selectedCase(null);
-            _.each($("#preview-form input"), function(input) { input.value = ""; });
-        }
     });
 
     self.saveProperty = function() {
@@ -171,7 +170,7 @@ var SprintModel = function() {
         return _.flatten(_.map(self.menus(), function(m) { return m.forms(); }))
     });
 
-    self.populate = function() {
+    self.addTemplateApp = function() {
         self.addMenu();
 
         var menu = _.last(self.menus());
@@ -192,22 +191,6 @@ var SprintModel = function() {
             saveToCase: 'favoriteColor',
         });
         self.selectedForm(menu.forms()[0]);
-
-        /*self.cases.push({
-            id: ++self.caseCount,
-            name: 'Yury',
-            properties: {'age': 38, 'favoriteColor': 'red'},
-        });
-        self.cases.push({
-            id: ++self.caseCount,
-            name: 'Brandon',
-            properties: {'age': 33, 'favoriteColor': 'orange'},
-        });
-        self.cases.push({
-            id: ++self.caseCount,
-            name: 'Amy',
-            properties: {'age': 37, 'favoriteColor': 'yellow'},
-        });*/
     };
 };
 

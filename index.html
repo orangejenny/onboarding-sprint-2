@@ -31,8 +31,8 @@
                     <button class="pull-right btn btn-warning btn-xs" data-bind="click: debug" style="margin: 5px;">
                         Debug
                     </button>
-                    <button class="pull-right btn btn-danger btn-xs" data-bind="click: populate" style="margin: 5px;">
-                        Populate with sample data
+                    <button class="pull-right btn btn-danger btn-xs" data-bind="click: addTemplateApp" style="margin: 5px;">
+                        Use template app
                     </button>
                     <a class="navbar-brand" href="#">My App</a>
                 </div>
@@ -100,7 +100,7 @@
                         <h4 class="area-header" data-bind="with: selectedForm"><span data-bind="text: name"></span> Questions</h4>
                         <div class="area-content area-content-nav">
                             <div class="nav-item">
-                                <button data-bind="click: function() { $root.previewing(true); }" class="btn btn-default">Save &amp; Preview</button>
+                                <button data-bind="click: restartPreview" class="btn btn-default">Save &amp; Preview</button>
                             </div>
                             <div data-bind="with: selectedForm">
                                 <ul data-bind="foreach: questions">
@@ -186,10 +186,10 @@
                             <div id="preview-feedback" class="area-content" data-bind="visible: $root.previewingFeedback">
                                 <div class="alert alert-success">
                                     Congratulations!
+                                    <br><br>
+                                    You <span data-bind="text: feedbackAction"></span> 1 case.
                                     <br>
-                                    Submitted 1 form.
-                                    <br>
-                                    <span data-bind="text: feedbackAction"></span> 1 case.
+                                    You also submitted 1 form.
                                 </div>
                             </div>
                         </div><!-- / #app-preview -->
