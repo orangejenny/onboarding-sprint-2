@@ -22,7 +22,7 @@
               media="all" href="css/style.css" />
         <style type="text/css">
             /* TODO: support deletion of menus, forms, and questions */
-            .appnav-delete {
+            .menus-container .appnav-delete {
                 visibility: hidden !important;
             }
         </style>
@@ -141,7 +141,7 @@
                                     <li>
                                         <div class="appnav-item"
                                              data-bind="css: { active: $root.selectedQuestion() && $root.selectedQuestion().id == $data.id }">
-                                            <a href="#"
+                                            <a href="#" data-bind="click: $root.deleteQuestion"
                                                class="appnav-delete">
                                                 <i class="fa fa-trash-o"></i>
                                             </a>

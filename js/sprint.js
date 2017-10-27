@@ -1,18 +1,24 @@
 var QuestionModel = function(options) {
     var self = this;
 
-    self.isCaseName = options.isCaseName;
-
     self.id = ko.observable(options.id);
     self.display = ko.observable(options.display);
-    self.shouldSaveToCase = ko.observable(!!options.saveToCase || self.isCaseName);
-    self.saveToCase = ko.observable(self.isCaseName ? "name" : options.saveToCase);
+    self.shouldSaveToCase = ko.observable(!!options.saveToCase);
+    self.saveToCase = ko.observable(options.saveToCase);
+    self.isCaseName = ko.observable(options.isCaseName);
 
     self.displayWithFallback = ko.computed(function() {
         return self.display() || self.id();
     });
     self.saveToCaseWithFallback = ko.computed(function() {
         return self.saveToCase() || self.id();
+    });
+
+    self.isCaseName.subscribe(function(newValue) {
+        if (newValue) {
+            self.shouldSaveToCase(true);
+            self.saveToCase("name");
+        }
     });
 };
 
@@ -27,7 +33,7 @@ var FormModel = function(options) {
     self.submissions = ko.observableArray([]);
 
     self.hasQuestionsToMap = ko.computed(function() {
-        return !!_.find(self.questions(), function(q) { return !q.shouldSaveToCase() && !q.isCaseName; });    // TODO: DRY up with ko if statements in modal's html
+        return !!_.find(self.questions(), function(q) { return !q.shouldSaveToCase() && !q.isCaseName(); });    // TODO: DRY up with ko if statements in modal's html
     });
 };
 
@@ -189,6 +195,17 @@ var SprintModel = function() {
         form.questions.push(question);
         self.selectedForm(form);
         self.selectedQuestion(question);
+    };
+
+    self.deleteQuestion = function(question) {
+        self.selectedForm().questions.remove(question);
+        self.selectedQuestion(null);
+        if (question.isCaseName) {
+            var newCaseNameQuestion = _.first(self.selectedForm().questions());
+            if (newCaseNameQuestion) {
+                newCaseNameQuestion.isCaseName(true);
+            }
+        }
     };
 
     self.selectedForm.subscribe(function(newValue) {
