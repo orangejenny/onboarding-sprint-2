@@ -1,13 +1,16 @@
 <html>
     <head>
         <title>My App</title>
+
         <link type="text/css" rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="js/sprint.js"></script>
+
         <link type="text/css"
               rel="stylesheet"
               media="all" href="css/font-commcare.css" />
@@ -387,7 +390,7 @@
                         </div>
                         <div class="modal-body">
                             <!-- ko if: hasQuestionsToMap -->
-                                <select class="form-control" data-bind="foreach: questions">
+                                <select class="form-control" data-bind="foreach: $root.allQuestions">
                                     <!-- ko ifnot: shouldSaveToCase -->
                                         <!-- ko ifnot: isCaseName -->
                                             <option data-bind="text: displayWithFallback, attr: { value: id }"></option>
@@ -398,11 +401,11 @@
                             <!-- ko ifnot: hasQuestionsToMap -->
                                 <div class="alert alert-info">
                                     <i class="fa fa-question-circle"></i>
-                                    <!-- ko if: questions().length -->
-                                        All of the questions in <strong><span data-bind="text: name"></span></strong> are already being saved to your case!
+                                    <!-- ko if: $root.allQuestions().length -->
+                                        All of your questions are already being saved to the case!
                                     <!-- /ko -->
-                                    <!-- ko ifnot: questions().length -->
-                                        <strong><span data-bind="text: name"></span></strong> doesn't have any questions yet!
+                                    <!-- ko ifnot: $root.allQuestions().length -->
+                                        You don't have any questions yet!
                                     <!-- /ko -->
                                 </div>
                             <!-- /ko -->

@@ -116,7 +116,7 @@ var SprintModel = function() {
 
     self.saveProperty = function(form, e) {
         var id = $(e.currentTarget).closest(".modal").find("select").val(),
-            question = _.find(form.questions(), function(q) { return q.id() === id });
+            question = _.find(self.allQuestions(), function(q) { return q.id() === id });
         question.shouldSaveToCase(true);
         question.saveToCase(id);
         $("#add-property-modal").modal('hide');
@@ -221,6 +221,16 @@ var SprintModel = function() {
 
     self.allForms = ko.computed(function() {
         return _.flatten(_.map(self.menus(), function(m) { return m.forms(); }))
+    });
+
+    self.allQuestions = ko.computed(function() {
+        // TODO: DRY up the various chains
+        return _.chain(self.menus())
+                .map(function(m) { return m.forms(); })
+                .flatten()
+                .map(function(f) { return f.questions(); })
+                .flatten()
+                .value();
     });
 
     self.addTemplateApp = function() {
