@@ -170,10 +170,17 @@
                                 <!-- /ko -->
                             </h4>
                             <div id="preview-case-list" class="area-content" data-bind="visible: $root.previewingCaseList">
-                                <h5>Case List</h5>
-                                <ul data-bind="foreach: cases">
-                                    <li data-bind="text: name, click: function() { $root.selectedCase($data) }"></li>
+                                <h5>Select a Case</h5>
+                                <ul class="list-group" data-bind="foreach: cases">
+                                    <button class="list-group-item" data-bind="text: name, click: function() { $root.selectedCase($data) }"></button>
                                 </ul>
+                                <!-- ko ifnot: cases().length -->
+                                    <div class="alert alert-info">
+                                        <i class="fa fa-exclamation-circle"></i>
+                                        You don't have any cases yet!
+                                        <br>Try using a registration form to create one.
+                                    </div>
+                                <!-- /ko -->
                             </div>
                             <div id="preview-form" class="area-content" data-bind="visible: $root.previewingForm">
                                 <div data-bind="with: selectedForm">
