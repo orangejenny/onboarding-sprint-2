@@ -14,10 +14,17 @@ var QuestionModel = function(options) {
         return self.saveToCase() || self.id();
     });
 
+    self.makeCaseName = function() {
+        self.shouldSaveToCase(true);
+        self.saveToCase("name");
+    };
+
+    if (options.isCaseName) {
+        self.makeCaseName();
+    }
     self.isCaseName.subscribe(function(newValue) {
         if (newValue) {
-            self.shouldSaveToCase(true);
-            self.saveToCase("name");
+            self.makeCaseName();
         }
     });
 };
