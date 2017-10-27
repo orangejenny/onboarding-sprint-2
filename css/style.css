@@ -355,4 +355,5 @@ html, body, .main-content, .app-container {
         color: #56acff;
         text-shadow: 0 0 10px #000; }
 
-/*# sourceMappingURL=style.css.map */
+.questions-container .active {
+  background-color: #f9c700; }
