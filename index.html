@@ -238,6 +238,12 @@
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <!-- ko ifnot: cases().length -->
+                                            <div class="alert alert-info">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                                You don't have any cases yet!
+                                            </div>
+                                        <!-- /ko -->
                                     </div><!-- /Cases tab -->
 
                                     <!-- FORMS TABS -->
@@ -265,6 +271,12 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <!-- ko ifnot: submissions().length -->
+                                                <div class="alert alert-info">
+                                                    <i class="fa fa-exclamation-circle"></i>
+                                                    You haven't submitted a <strong><span data-bind="text: name"></span></strong> yet!
+                                                </div>
+                                            <!-- /ko -->
                                         </div>
                                     <!-- /ko -->
                                     <!-- /FORMS TABS -->
@@ -299,9 +311,11 @@
                                 </div>
                             <!-- /ko -->
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.saveProperty">Save</button>
-                        </div>
+                        <!-- ko if: hasQuestionsToMap -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.saveProperty">Save</button>
+                            </div>
+                        <!-- /ko -->
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
