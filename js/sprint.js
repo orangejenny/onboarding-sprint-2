@@ -71,6 +71,23 @@ var SprintModel = function() {
         return [];
     });
 
+    // If user has submitted multiple cases but hasn't followed up
+    // on any, mudge them to do so.
+    self.nudgeFollowupForm = ko.computed(function() {
+        if (!self.menus().length) {
+            return false;
+        }
+        if (self.cases().length <= 1) {
+            return false;
+        }
+        return !!_.chain(self.menus())
+                  .map(function(m) { return m.forms(); })
+                  .flatten()
+                  .filter(function(f) { return f.requiresCase })
+                  .find(function(f) { return !f.questions().length; })
+                  .value();
+    });
+
     self.previewing = ko.observable(false);
     self.previewingFeedback = ko.observable(false);
     self.restartPreview = function() {
