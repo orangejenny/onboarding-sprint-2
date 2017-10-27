@@ -101,7 +101,10 @@
                         <h4 class="area-header" data-bind="with: selectedForm"><span data-bind="text: name"></span> Questions</h4>
                         <div class="area-content area-content-nav">
                             <div class="nav-item">
-                                <button data-bind="click: restartPreview" class="btn btn-default">Save &amp; Preview</button>
+                                <button data-bind="click: restartPreview" class="btn btn-default">
+                                    <i class="fa fa-play"></i>
+                                    Save &amp; Preview
+                                </button>
                             </div>
                             <div data-bind="with: selectedForm">
                                 <ul data-bind="foreach: questions">
@@ -111,8 +114,10 @@
                                     </li>
                                 </ul>
                                 <div class="nav-item">
-                                    <button data-bind="click: function() { $root.addQuestion(); }"
-                                            class="btn btn-default">Add Question</button>
+                                    <button data-bind="click: function() { $root.addQuestion(); }" class="btn btn-default">
+                                        <i class="fa fa-plus"></i>
+                                        Add Question
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -195,7 +200,15 @@
                                             </div>
                                         <!-- /ko -->
                                     </div>
-                                    <button data-bind="click: function() { $root.submitForm() }" class="btn btn-primary">Submit</button>
+                                    <!-- ko ifnot: questions().length -->
+                                        <div class="alert alert-info">
+                                            <i class="fa fa-exclamation-circle"></i>
+                                            Your form doesn't have any questions yet!
+                                        </div>
+                                    <!-- /ko -->
+                                    <!-- ko if: questions().length -->
+                                        <button data-bind="click: function() { $root.submitForm() }" class="btn btn-primary">Submit</button>
+                                    <!-- /ko -->
                                 </div>
                             </div>
                             <div id="preview-feedback" class="area-content" data-bind="visible: $root.previewingFeedback">
@@ -232,7 +245,9 @@
                                                         <th data-bind="text: $data"></th>
                                                     <!-- /ko -->
                                                     <th>
-                                                        <button id="add-column" class="btn btn-default" data-toggle="modal" data-target="#add-property-modal">+</button>
+                                                        <button id="add-column" class="btn btn-default" data-toggle="modal" data-target="#add-property-modal">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
                                                     </th>
                                                 </tr>
                                             </thead>
