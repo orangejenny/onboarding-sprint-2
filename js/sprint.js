@@ -1,6 +1,10 @@
 var SprintModel = function() {
     var self = this;
 
+    self.debug = function() {
+        debugger;
+    };
+
     self.menus = ko.observableArray();
     self.cases = ko.observableArray();
 
@@ -35,8 +39,8 @@ var SprintModel = function() {
     });
 
     self.previewing = ko.observable(false);
-    self.notPreviewing = ko.computed(function() {
-        return !self.previewing();
+    self.showQuestionProperties = ko.computed(function() {
+        return !self.previewing() && self.selectedQuestion();
     });
     self.previewingCaseList = ko.computed(function() {
         return self.previewing() && !self.previewingFeedback() && self.selectedForm().requiresCase && !self.selectedCase();
@@ -60,18 +64,6 @@ var SprintModel = function() {
         }
     });
 
-    var _formSubmissions = function(requiresCase) {
-        if (requiresCase) {
-            return ko.observableArray([
-                { date: "2017-10-21 12:31", caseName: 'Yury', questions: { color: 'pink' } },
-                { date: "2017-10-21 12:36", caseName: 'Yury', questions: { color: 'red' } },
-                { date: "2017-10-21 12:41", caseName: 'Brandon', questions: { color: 'orange' } },
-                { date: "2017-10-21 12:51", caseName: 'Amy', questions: { color: 'yellow' } },
-            ]);
-        }
-        return ko.observableArray([]);
-    };
-
     self.saveProperty = function() {
         // TODO
         alert("do stuff");
@@ -91,7 +83,7 @@ var SprintModel = function() {
                 minute: now.getMinutes(),
                 second: now.getSeconds(),
             }),
-            questions: _.reduce($("#preview-form input"), function(memo, input) { memo[input.id] = input.value; return memo; }, {})
+            questions: _.reduce($("#preview-form input"), function(memo, input) { memo[input.id] = input.value; return memo; }, {}),
         });
 
         if (_.compact(_.values(submission.questions)).length !== _.keys(submission.questions).length) {
@@ -102,8 +94,8 @@ var SprintModel = function() {
         // Create or update case, and actually submit form
         var properties = {};
         _.each(self.selectedForm().questions(), function(q) {
-            if (q.saveToCase) {
-                properties[q.saveToCase] = submission.questions[q.id];
+            if (q.saveToCase()) {
+                properties[q.saveToCase()] = submission.questions[q.id()];
             }
         });
         if (form.requiresCase) {
@@ -125,11 +117,12 @@ var SprintModel = function() {
     self.addQuestion = function(properties) {
         var form = self.selectedForm();
         self.questionCount++;
-        var question = _.defaults(properties || {}, {
-            id: 'question' + self.questionCount,
-            display: '',
-            saveToCase: '',
-        });
+        properties = properties || {};
+        var question = {
+            id: ko.observable(properties.id || 'question' + self.questionCount),
+            display: ko.observable(properties.display || ''),
+            saveToCase: ko.observable(properties.saveToCase || ''),
+        };
         form.questions.push(question);
         self.selectedForm(form);
         self.selectedQuestion(question);
@@ -147,10 +140,10 @@ var SprintModel = function() {
     self.addForm = function(menuIndex, requiresCase) {
         var form = {
             id: 'form' + ++self.formCount,
-            name: requiresCase ? "Followup Form" : "Registration Form",
+            name: requiresCase ? "Followup Form" + (self.menus()[menuIndex].forms.length > 2 ?  self.menus()[menuIndex].forms.length - 1 : "") : "Registration Form",
             requiresCase: requiresCase,
             questions: ko.observableArray([]),
-            submissions: _formSubmissions(requiresCase),
+            submissions: ko.observableArray([]),
         };
         self.menus()[menuIndex].forms.push(form);
         self.selectedForm(form);
@@ -178,8 +171,7 @@ var SprintModel = function() {
             display: 'What is your name?',
             saveToCase: 'name',
         });
-        self.addQuestion({
-            id: 'age',
+        self.addQuestion({ id: 'age',
             display: 'What is your age?',
             saveToCase: 'age',
         });
@@ -191,7 +183,7 @@ var SprintModel = function() {
         });
         self.selectedForm(menu.forms()[0]);
 
-        self.cases.push({
+        /*self.cases.push({
             id: ++self.caseCount,
             name: 'Yury',
             properties: {'age': 38, 'favoriteColor': 'red'},
@@ -205,7 +197,7 @@ var SprintModel = function() {
             id: ++self.caseCount,
             name: 'Amy',
             properties: {'age': 37, 'favoriteColor': 'yellow'},
-        });
+        });*/
     };
 };
 

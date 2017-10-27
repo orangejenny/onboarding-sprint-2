@@ -25,6 +25,9 @@
         <div id="sprint" class="main-content">
             <nav class="navbar navbar-default navbar-static-top">
                 <div class="container-fluid">
+                    <button class="pull-right btn btn-warning btn-xs" data-bind="click: debug" style="margin: 5px;">
+                        Debug
+                    </button>
                     <button class="pull-right btn btn-danger btn-xs" data-bind="click: populate" style="margin: 5px;">
                         Populate with sample data
                     </button>
@@ -100,29 +103,31 @@
                 <div class="app-column actions-container"  data-bind="visible: selectedForm">
                     <div class="app-row active-form-area">
 
-                        <div id="question-properties" class="area-container" data-bind="visible: $root.notPreviewing">
+                        <div id="question-properties" class="area-container" data-bind="visible: $root.showQuestionProperties">
                             <h4 class="area-header">Question Properties</h4>
                             <div data-bind="with: selectedQuestion" class="area-content">
                                 <div class="form-horizontal">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Display Text</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="question-display" data-bind="value: display">
+                                            <input type="text" class="form-control" data-bind="value: display">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">ID</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="question-id" data-bind="value: id">
+                                            <input type="text" class="form-control" data-bind="value: id">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Case</label>
                                         <div class="col-sm-8">
-                                            <label>
-                                                <input type="checkbox" data-bind="checked: !!saveToCase"> Save to case as
-                                            </label>
-                                            <input type="text" class="form-control" id="question-saveToCase" data-bind="value: saveToCase">
+                                            <div class="form-inline">
+                                                <label>
+                                                    <input type="checkbox" data-bind="checked: saveToCase"> Save to case as
+                                                </label>
+                                                <input type="text" class="form-control" data-bind="value: saveToCase, attr: { placeholder: id }">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -133,9 +138,9 @@
                              class="area-container"
                              data-bind="visible: $root.previewing">
                             <h4 class="area-header">
-                                App Preview
+                                Form Preview
                                 <!-- ko if: selectedCase -->
-                                > <span data-bind="text: selectedCaseName"></span>
+                                &gt; <span data-bind="text: selectedCaseName"></span>
                                 <!-- /ko -->
                             </h4>
                             <div id="preview-case-list" class="area-content" data-bind="visible: $root.previewingCaseList">
